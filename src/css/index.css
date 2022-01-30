@@ -17,4 +17,11 @@ a{
 
 body{
   font-family: 'Print Clearly', sans-serif;
+  font-size: 1.3rem;
+}
+
+.med-title{
+  font-size: 2rem;
+  font-weight: 500;
+  margin: 1rem 0;
 }

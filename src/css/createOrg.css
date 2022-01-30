@@ -1,0 +1,36 @@
+.create-org{
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.org-card{
+    border: black solid 1px;
+    border-radius: var(---brad);
+    padding: 1rem;
+    opacity: 0;
+    animation: fade-in 1s ease-in forwards;
+}
+
+.org-form{
+    display: grid;
+    grid-gap: 0.5rem;
+}
+
+.name-input,
+.sub-input,
+.credit-input,
+.create-connect{
+    width: 100%;
+    padding: 0.5rem;
+}
+
+@keyframes fade-in{
+    0% {
+      opacity: 0;
+    }
+    100%{
+      opacity:1;
+    }
+  }

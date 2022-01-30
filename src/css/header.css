@@ -38,3 +38,9 @@
     border-radius: var(---brad);
     cursor: pointer;
 }
+
+.menu{
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    grid-gap: 2rem;
+}

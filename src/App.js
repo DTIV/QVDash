@@ -3,7 +3,10 @@ import { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import Header from "./components/Header";
 import { Routes,Router, Route, Link } from "react-router-dom";
-
+import CreateOrg from "./components/CreateOrg";
+import ContractAddress from './contractData/contracts-address.json'
+import ContractAbi from './contractData/abi.json'
+import { detectProvider } from './functions'
 
 function App() {
     
@@ -15,22 +18,9 @@ function App() {
   const [getProvider, setProvider] = useState(false);
   const [getEtherBal, setEtherBal] = useState("");
 
-  // const token = TokenAddress.Token
-  // const abi = TokenArtifacts.abi
-
-  const detectProvider = () => {
-    // Get provider
-    let provider;
-    if(window.ethereum) {
-      provider = window.ethereum;
-    } else if (window.web3) {
-      provider = window.web3.currentProvider;
-    }else{
-      window.alert("No Ethereum browser detected")
-    }
-    return provider
-  }
-
+  const contract = ContractAddress.Token
+  const abi = ContractAbi.abi
+  
   useEffect(()=> {
     // Set provider and check connection
     const Disconnect = () => {
@@ -123,6 +113,7 @@ function App() {
     setError(false)
     setConnecting(false)
   }
+
   return (
     <div className="App">
       <Header 
@@ -134,6 +125,16 @@ function App() {
       balance={getEtherBal}
       detect={detectProvider}
       closeError={closeError}/>
+      <Routes >
+        <Route exact path="/create/org" element={ 
+          <CreateOrg 
+            connected={connected} 
+            connect={Connect}
+            abi={abi}
+            contract={contract}/>
+            }/>
+      </Routes>
+      
     </div>
   );
 }

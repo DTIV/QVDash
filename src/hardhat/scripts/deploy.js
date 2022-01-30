@@ -5,12 +5,12 @@ const hre = require("hardhat");
 async function main() {
   const [deployer] = await hre.ethers.getSigners();
 
-  const Token = await ethers.getContractFactory("Token");
+  const Token = await ethers.getContractFactory("QVote");
   const token = await Token.deploy();
 
   await token.deployed();
 
-  console.log("Token deployed to:", token.address);
+  console.log("Contract deployed to:", token.address);
 
   saveFrontendFiles(token);
 }
@@ -29,10 +29,10 @@ function saveFrontendFiles(token){
     JSON.stringify({Token: token.address}, undefined,2)
   );
 
-  const TokenArtifact = artifacts.readArtifactSync("Token");
+  const TokenArtifact = artifacts.readArtifactSync("QVote");
 
   fs.writeFileSync(
-    contractsDir + "/Token.json",
+    contractsDir + "/abi.json",
     JSON.stringify(TokenArtifact,null,2)
   );
 }
