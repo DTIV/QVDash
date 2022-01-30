@@ -12,9 +12,9 @@ const Header = (props) => {
     return (
     <div className='navbar'>
         <div>
-            <a href="/">
+            <Link to="/">
                 <span className='qv-logo'>QV</span><span className='dash-logo'>dash</span> 
-            </a>
+            </Link>
         </div>
         <div className='menu'>
             <Link to="/create/org">

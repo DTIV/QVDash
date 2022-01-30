@@ -7,9 +7,10 @@ import CreateOrg from "./components/CreateOrg";
 import ContractAddress from './contractData/contracts-address.json'
 import ContractAbi from './contractData/abi.json'
 import { detectProvider } from './functions'
+import CreateProps from "./components/CreateProps";
+import Showcase from "./components/Showcase"
 
 function App() {
-    
   const [connected, setConnected] = useState(false);
   const [connecting, setConnecting] = useState(false);
   const [getError, setError] = useState(false);
@@ -126,13 +127,23 @@ function App() {
       detect={detectProvider}
       closeError={closeError}/>
       <Routes >
+        <Route exact path="/" element={
+          <Showcase />
+        }/>
         <Route exact path="/create/org" element={ 
           <CreateOrg 
             connected={connected} 
             connect={Connect}
             abi={abi}
             contract={contract}/>
-            }/>
+        }/>
+        <Route exact path="/create/proposal" element={
+          <CreateProps
+            connected={connected} 
+            connect={Connect}
+            abi={abi}
+            contract={contract}/>
+        }/>
       </Routes>
       
     </div>

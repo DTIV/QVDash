@@ -75,13 +75,13 @@ contract QVote is Ownable {
 
     //helper function
     //mints voting token (only owner)
-    function mint(uint _orgID  ,address account, uint256 amount)public onlyOwner{
+    function mint(uint _orgID  ,address account, uint256 amount)public {
         require(account != address(0), "invalid account");
         Organization storage _org = organizations[_orgID];
         _org.userBalance[account] = _org.userBalance[account].add(amount);
     }
 
-    function createNewOrganization(string memory _name, uint256 _cpv)external onlyOwner{
+    function createNewOrganization(string memory _name, uint256 _cpv)external {
         require(organizations[OrganizationOwners[msg.sender]].isActive==false,"An organization with this address already exists!");
         organizationCount++;
         Organization storage newOrg = organizations[organizationCount];
@@ -101,7 +101,7 @@ contract QVote is Ownable {
     /* ############################# Proposal part starts here  ############################################## */  
 
     //creates a new proposal with description and duration (only owners)
-    function createNewProposal(uint _duration , string calldata _desc)external onlyOwner{
+    function createNewProposal(uint _duration , string calldata _desc)external {
         require(_duration >0, "Duration should be more than 0");
         uint _orgID = OrganizationOwners[msg.sender];
         require(organizations[_orgID].isActive==true,"No active organization with current address!");
