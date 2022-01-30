@@ -9,8 +9,8 @@ import ContractAbi from './contractData/abi.json'
 import { detectProvider } from './functions'
 import CreateProps from "./components/CreateProps";
 import Showcase from "./components/Showcase"
-
-
+import OrgPage from "./components/OrgPage";
+import OrgProfile from "./components/OrgProfile";
 
 
 /*
@@ -149,26 +149,41 @@ function App() {
       detect={detectProvider}
       closeError={closeError}
       orgActive={orgActive}/>
-      <Routes >
-        <Route exact path="/" element={
-          <Showcase />
-        }/>
-        <Route exact path="/create/org" element={ 
-          <CreateOrg 
-            connected={connected} 
-            connect={Connect}
-            abi={abi}
-            contract={contract}/>
-        }/>
-        <Route exact path="/create/proposal" element={
-          <CreateProps
-            connected={connected} 
-            connect={Connect}
-            abi={abi}
-            contract={contract}/>
-        }/>
-      </Routes>
-      
+      <div className="inner-body">
+        <Routes >
+          <Route exact path="/" element={
+            <Showcase />
+          }/>
+          {
+            orgActive ?
+              <Route exact path="/create/proposal" element={
+                <CreateProps
+                  connected={connected} 
+                  connect={Connect}
+                  abi={abi}
+                  contract={contract}/>
+              }/>
+            :
+            <Route exact path="/create/org" element={ 
+              <CreateOrg 
+                connected={connected} 
+                connect={Connect}
+                abi={abi}
+                contract={contract}/>
+            }/>
+          }
+          <Route exact path="/org" element={
+            <OrgPage 
+              contract={getContract}
+              orgActive={orgActive}/>
+          }/>
+          <Route exact path="/org/:id" element={
+            <OrgProfile 
+              contract={getContract}
+              orgActive={orgActive}/>
+          }/>
+        </Routes>
+      </div>
     </div>
   );
 }

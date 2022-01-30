@@ -1,0 +1,42 @@
+.orglist-card{
+    border: black solid 1px;
+    padding: 1rem;
+    border-radius: var(---brad);
+    display: grid;
+    grid-template-rows: repeat(2, auto);
+    grid-gap: 1rem;
+}
+
+.orglist-loading,.orglist-card{
+    animation: fade-in ease-in 1s forwards;
+}
+
+.orglist-wrap{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 1rem;
+}
+
+.otop-wrap{
+    display: flex;
+    justify-content: space-between;
+}
+
+.org-name{
+    font-size: 1.6rem;
+}
+
+.prop-count{
+    font-size: 3rem;
+    font-weight: 600;
+}
+.oprop-wrap{
+    text-align: center;
+}
+
+.orgbtn-wrap{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 3rem;
+}

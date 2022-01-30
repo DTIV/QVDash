@@ -4,11 +4,12 @@ import { useEffect } from 'react';
 import ConnectButton from './ConnectButton';
 
 const Header = (props) => {
+    
     useEffect(() => {
         const elem = document.getElementById('network-select');
         elem.value = props.currentNetwork
     }, [props.currentNetwork])
-    
+
     return (
     <div className='navbar'>
         <div>
@@ -19,11 +20,11 @@ const Header = (props) => {
         <div className='menu'>
             {
                 props.orgActive ?
-                <Link to="/create/org">
+                <Link to="/create/proposal">
                     Create
                 </Link>
                 :
-                <Link to="/create/proposal">
+                <Link to="/create/org">
                     Create
                 </Link>
             }
@@ -31,7 +32,7 @@ const Header = (props) => {
             <Link to="/create/org">
                 Votes
             </Link>
-            <Link to="/create/org">
+            <Link to="/org">
                 Organizations
             </Link>
             
