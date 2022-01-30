@@ -5,13 +5,14 @@ import { useState } from 'react';
 import Error from './Error';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser'
 
 const CreateProps = (props) => {
     const abi = props.abi
     const contractAddress = props.contract
 
-    const [orgName, setOrgName] = useState("");
-    const [getCPV, setCPV] = useState(0);
+    const [propTitle, setPropTitle] = useState("");
+    const [getDuration, setDuration] = useState(43200);
     const [organization, setOrg] = useState("");
     const [getError, setgetError] = useState(0);
     const [blog, setBlog] = useState("")
@@ -23,7 +24,7 @@ const CreateProps = (props) => {
         const signer = eth.getSigner()
         // const address = await signer.getAddress()
         // const Contract = new ethers.Contract(contractAddress, abi, signer)
-        // const org = (await Contract.createNewOrganization(orgName, getCPV)).toString()
+        // const org = (await Contract.createNewOrganization(propTitle, getDuration)).toString()
         // setOrg(org)
     }
 
@@ -35,7 +36,13 @@ const CreateProps = (props) => {
         <div className='create-org'>
             <div className='org-card'>
                 <div className='med-title'>Create Your Proposal</div>
-                <Error name={orgName} cpv={getCPV}/>
+                {
+                    (propTitle.length < 10) ?
+                    <div className='error-card'>
+                        Title Less Than 10 Characters
+                    </div>
+                    :<></>
+                }
                 {
                     props.connected ? 
                     <div className='org-form-wrap'>
@@ -44,17 +51,19 @@ const CreateProps = (props) => {
                             createProp()
                         }}>
                             <div>
-                                <input className='name-input' type="text" placeholder='Name' onChange={(e)=>(setOrgName(e.target.value))}/>
+                                <input className='title-input' type="text" placeholder='Title' onChange={(e)=>(setPropTitle(e.target.value))}/>
                             </div>
                             <div>
                                 <label htmlFor="">Duration</label>
-                                <select className='duration-sel'>
-                                    <option>12h</option>
-                                    <option>24h</option>
-                                    <option>Day</option>
-                                    <option>2 Weeks</option>
-                                    <option>Month</option>
-                                    <option>3 Months</option>
+                                <select className='duration-sel' onChange={(e) => {
+                                    setDuration(e.target.value)
+                                }}>
+                                    <option value={43200} data-num={43200}>12h</option>
+                                    <option value={86400} data-num={86400}>Day</option>
+                                    <option value={604800} data-num={604800}>Week</option>
+                                    <option value={1209600} data-num={1209600}>2 Weeks</option>
+                                    <option value={2419200} data-num={2419200}>Month</option>
+                                    <option value={7257600} data-num={7257600}>3 Months</option>
                                 </select>
                             </div>
                             <CKEditor
@@ -63,7 +72,7 @@ const CreateProps = (props) => {
                                 onChange = {handleOnChange}
                             />
                             {
-                                (orgName.length >= 3 && getCPV >= 2) ?
+                                (propTitle.length >= 10) ?
                                 <div>
                                     <input className='sub-input' type="submit" value="Submit" />
                                 </div> 

@@ -17,9 +17,17 @@ const Header = (props) => {
             </Link>
         </div>
         <div className='menu'>
-            <Link to="/create/org">
-                Create
-            </Link>
+            {
+                props.orgActive ?
+                <Link to="/create/org">
+                    Create
+                </Link>
+                :
+                <Link to="/create/proposal">
+                    Create
+                </Link>
+            }
+            
             <Link to="/create/org">
                 Votes
             </Link>

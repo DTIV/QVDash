@@ -11,6 +11,7 @@ const CreateOrg = (props) => {
     const [getCPV, setCPV] = useState(0);
     const [organization, setOrg] = useState("");
     const [getError, setgetError] = useState(0);
+
     const createOrg = async () => {
         console.log("submitting")
         const provider = detectProvider()
@@ -21,7 +22,6 @@ const CreateOrg = (props) => {
         const org = (await Contract.createNewOrganization(orgName, getCPV)).toString()
         setOrg(org)
     }
-    console.log(orgName.length, Number(getCPV))
 
     return (
         

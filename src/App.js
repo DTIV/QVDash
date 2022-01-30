@@ -10,6 +10,18 @@ import { detectProvider } from './functions'
 import CreateProps from "./components/CreateProps";
 import Showcase from "./components/Showcase"
 
+
+
+
+/*
+import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+
+WHEN THE DESCRIPTION IS RETURNED FROM THE CONTRACT - THE HTML STRING WILL NEED TO
+
+var txt = ReactHtmlParser(vuilder.blog)
+
+*/
+
 function App() {
   const [connected, setConnected] = useState(false);
   const [connecting, setConnecting] = useState(false);
@@ -18,10 +30,13 @@ function App() {
   const [getCurrentNetwork, setCurrentNetwork] = useState("");
   const [getProvider, setProvider] = useState(false);
   const [getEtherBal, setEtherBal] = useState("");
-
+  const [isOrg, setIsOrg] = useState(false)
+  const [getContract, setContract] = useState("")
+  const [orgActive, setOrgActive] = useState(false)
   const contract = ContractAddress.Token
   const abi = ContractAbi.abi
   
+
   useEffect(()=> {
     // Set provider and check connection
     const Disconnect = () => {
@@ -92,8 +107,13 @@ function App() {
     const eth = new ethers.providers.Web3Provider(provider);
     const accounts = await eth.listAccounts()
     try{
+      const signer = eth.getSigner()
+      const address = await signer.getAddress()
+      const QVContract = new ethers.Contract(contract, abi, signer)
       const weiBalance = (await eth.getBalance(accounts[0])).toString()
       const etherBalance = (Number(weiBalance)/10**18).toFixed(5)
+      const tx = await QVContract.checkOrgActive()
+      setOrgActive(tx)
       provider.request({ method: 'eth_accounts' })
       .then((res) => {
         if(res.length > 0){
@@ -101,6 +121,8 @@ function App() {
           setCurrentAccount(accounts[0])
           setCurrentNetwork(parseInt(chain_id))
           setEtherBal(etherBalance)
+          setContract(QVContract)
+          // setIsOrg(isOrganize)
         }else{
           setConnected(false)
         }
@@ -125,7 +147,8 @@ function App() {
       currentNetwork={getCurrentNetwork}
       balance={getEtherBal}
       detect={detectProvider}
-      closeError={closeError}/>
+      closeError={closeError}
+      orgActive={orgActive}/>
       <Routes >
         <Route exact path="/" element={
           <Showcase />
