@@ -1,0 +1,60 @@
+.prop-card{
+    border: black solid 1px;
+    padding: 1rem;
+    border-radius: var(---brad);
+    
+}
+
+.proplist-wrap{
+    width: 80%;
+    border: orange solid 1px;
+    margin: auto;
+}
+
+.title-wrap{
+    display: flex;
+    justify-content: space-between;
+}
+
+.prop-created{
+    text-align: center;
+    word-wrap: break-word;
+}
+
+.time-wrap{
+    display: flex;
+    justify-content: space-between;
+}
+
+.desc-wrap{
+    margin: 1.5rem 0;
+}
+
+.form-wrap{
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+.vote-input{
+    min-width: 3rem!important;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.vote-side-down{
+    display: grid;
+    grid-template-columns: 0.1fr 1fr;
+}
+
+.vote-side-up{
+    display: grid;
+    grid-template-columns: 1fr 0.1fr;
+}
+
+.vote-btn-up,
+.vote-btn-down{
+    font-size: 2.5rem;
+    display: flex;
+    border: none;
+    cursor: pointer;
+}

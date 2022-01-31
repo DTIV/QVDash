@@ -30,6 +30,12 @@ body{
   text-align: center;
 }
 
+.sm-title{
+  font-size: 1.7rem;
+  font-weight: 500;
+  margin: 1rem 0;
+  text-align: center;
+}
 .a-btn{
   border: solid 1px;
   padding: 0.6rem 1rem;
