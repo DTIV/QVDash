@@ -9,22 +9,36 @@ import { BsArrowDownSquareFill,
 
 const OrgProfile = (props) => {
     const [orgArray, setOrgArray] = useState("");
+    const [contract, setContract] = useState("");
+
+    const path = window.location.pathname
+    const currentOID = Number(path.replace("/org/", ""))
 
     const getProps = async (QVContract) => {
         const propz = await QVContract.getuserProposals();
         setOrgArray(propz)
-        console.log(propz)
         return propz
     }
 
     useEffect(() => {
         const QVContract = props.contract;
+        setContract(QVContract)
         if(QVContract){
             getProps(QVContract)
         }
     }, [props.contract]);
+
+    const mint = async () => {
+        if(contract){
+            const QVContract = props.contract;
+        }
+    }
+
     return (
         <div>
+            <div className='mint-btn'>
+                <button className='a-btn' onClick={mint}>Get Credits</button>
+            </div>
             {
                 orgArray.length > 0 ?
                 <div>
@@ -32,7 +46,7 @@ const OrgProfile = (props) => {
                     <div className='proplist-wrap'>
                         {
                             orgArray.map((prop)=>(
-                                <div className='prop-card'>
+                                <div key={Number(prop.pid)} className='prop-card'>
                                     <div className='title-wrap'>
                                         <div className='sm-title'>{prop.title}</div>
                                         <div><small>ID#</small>{Number(prop.pid)}</div>
@@ -44,17 +58,24 @@ const OrgProfile = (props) => {
                                         </div>
                                         <div className='voting'>
                                             <div className='form-wrap'>
-                                                <form action="" className='vote-side-up'>
-                                                    <input className='vote-input' type="number"/>
-                                                    <button type='submit' className='vote-btn-up'>
-                                                        <BsArrowUpSquare />
-                                                    </button>
+                                                <form action="">
+                                                <div className='vote-count'>{Number(prop.upVotes)}</div>
+                                                    <div className='vote-side-up'>
+                                                        <input className='vote-input' type="number"/>
+                                                        <button type='submit' className='vote-btn-up'>
+                                                            <BsArrowUpSquare />
+                                                        </button>
+                                                    </div>
+                                                    
                                                 </form>
-                                                <form action="" className='vote-side-down'>  
-                                                    <button type='submit' className='vote-btn-down'>
-                                                        <BsArrowDownSquare />
-                                                    </button>
-                                                    <input className='vote-input' type="number"/>
+                                                <form action="" >
+                                                    <div className='vote-count'>{Number(prop.downVotes)}</div>
+                                                    <div className='vote-side-down'>
+                                                        <button type='submit' className='vote-btn-down'>
+                                                            <BsArrowDownSquare />
+                                                        </button>
+                                                        <input className='vote-input' type="number"/>
+                                                    </div>  
                                                 </form>
                                             </div>
                                         </div>

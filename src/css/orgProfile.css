@@ -7,7 +7,9 @@
 
 .proplist-wrap{
     width: 80%;
-    border: orange solid 1px;
+    display: grid;
+    grid-template-rows: repeat(auto,auto);
+    grid-gap: 1rem;
     margin: auto;
 }
 
@@ -19,6 +21,7 @@
 .prop-created{
     text-align: center;
     word-wrap: break-word;
+    margin: 1rem 0;
 }
 
 .time-wrap{
@@ -30,10 +33,16 @@
     margin: 1.5rem 0;
 }
 
+.vote-count{
+    text-align: center;
+    font-size: 2rem;
+    margin: 0.5rem 0;
+}
 .form-wrap{
     display: flex;
     justify-content: center;
     gap: 0.5rem;
+    margin: 1rem 0;
 }
 .vote-input{
     min-width: 3rem!important;
@@ -57,4 +66,9 @@
     display: flex;
     border: none;
     cursor: pointer;
+}
+
+.mint-btn{
+    margin: 3rem 0;
+    text-align: center;
 }
