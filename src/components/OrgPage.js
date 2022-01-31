@@ -17,12 +17,6 @@ const OrgPage = (props) => {
         }
     }, [props.contract]);
 
-    if(orgArray){
-        orgArray.map((e)=> {
-            console.log(e)
-        })
-    }
-    
     return (
         <div>
             <div className='lrg-title'>ORGANIZATIONS</div>
@@ -30,7 +24,7 @@ const OrgPage = (props) => {
                 {
                     props.orgActive ?
                     <div>
-                        <button className='a-btn'>Your Organization</button>
+                        <Link to className='a-btn'>Your Organization</Link>
                     </div>
                     :<></>
                 }
@@ -41,7 +35,7 @@ const OrgPage = (props) => {
                     <div className='orglist-wrap'>
                         {
                             orgArray.map((org)=>(
-                                <Link to={`/org/${Number(org.oid)}`} className='orglist-card'>
+                                <Link to={`/org/${Number(org.oid)}`} key={org.oid} className='orglist-card'>
                                     <div className='otop-wrap'>
                                         <div className='org-name'>{org.name}</div>
                                         <div><small>ID#</small>{Number(org.oid)}</div>

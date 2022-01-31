@@ -22,10 +22,9 @@ const CreateProps = (props) => {
         const provider = detectProvider()
         const eth = new ethers.providers.Web3Provider(provider)
         const signer = eth.getSigner()
-        // const address = await signer.getAddress()
-        // const Contract = new ethers.Contract(contractAddress, abi, signer)
-        // const org = (await Contract.createNewOrganization(propTitle, getDuration)).toString()
-        // setOrg(org)
+        const Contract = new ethers.Contract(contractAddress, abi, signer)
+        const prop = (await Contract.createNewProposal(getDuration,propTitle,blog))
+        setOrg(prop)
     }
 
     const handleOnChange = (e, editor) => {
