@@ -1,18 +1,37 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
-import { BsArrowDownSquareFill, 
-    BsArrowDownSquare, 
-    BsArrowUpSquareFill, 
-    BsArrowUpSquare } from "react-icons/bs";
+import PropStats from './PropStats';
+import PropList from './PropList';
 
 const OrgProfile = (props) => {
     const [orgArray, setOrgArray] = useState("");
     const [contract, setContract] = useState("");
+    const [userCreditBal, setUserCreditBal] = useState(0);
+    const [orgTokenSupply, setOrgTokenSupply] = useState(0);
+    const [memberCount, setMemberCount] = useState(0);
 
     const path = window.location.pathname
     const currentOID = Number(path.replace("/org/", ""))
+
+    
+    useEffect(() => {
+        const QVContract = props.contract;
+        setContract(QVContract)
+        if(QVContract){
+            getProps(QVContract)
+            getUserCredit(QVContract)
+            getTokenSupply(QVContract)
+            getMemberCount(QVContract)
+        }
+    }, [props.contract]);
+
+    const mint = async () => {
+        if(contract){
+            console.log("minting tokens")
+            const mint = contract.mint(currentOID);
+        }
+    }
 
     const getProps = async (QVContract) => {
         const propz = await QVContract.getuserProposals();
@@ -20,18 +39,22 @@ const OrgProfile = (props) => {
         return propz
     }
 
-    useEffect(() => {
-        const QVContract = props.contract;
-        setContract(QVContract)
-        if(QVContract){
-            getProps(QVContract)
-        }
-    }, [props.contract]);
+    const getUserCredit = async (QVContract) => {
+        const uc = await QVContract.checkUserBalance(currentOID);
+        setUserCreditBal(uc)
+        return uc
+    }
 
-    const mint = async () => {
-        if(contract){
-            const QVContract = props.contract;
-        }
+    const getTokenSupply = async (QVContract) => {
+        const ts = await QVContract.getUserOrganizationTokenSupply(currentOID)
+        setOrgTokenSupply(ts)
+        return ts
+    }
+
+    const getMemberCount = async (QVContract) => {
+        const ts = await QVContract.getOrgMembersCount(currentOID)
+        setMemberCount(ts)
+        return ts
     }
 
     return (
@@ -43,53 +66,16 @@ const OrgProfile = (props) => {
                 orgArray.length > 0 ?
                 <div>
                     <div className='lrg-title'>Proposals</div>
-                    <div className='proplist-wrap'>
-                        {
-                            orgArray.map((prop)=>(
-                                <div key={Number(prop.pid)} className='prop-card'>
-                                    <div className='title-wrap'>
-                                        <div className='sm-title'>{prop.title}</div>
-                                        <div><small>ID#</small>{Number(prop.pid)}</div>
-                                    </div>
-                                    <div className='prop-body'>
-                                        
-                                        <div className='desc-wrap'>
-                                            {ReactHtmlParser(prop.description)}
-                                        </div>
-                                        <div className='voting'>
-                                            <div className='form-wrap'>
-                                                <form action="">
-                                                <div className='vote-count'>{Number(prop.upVotes)}</div>
-                                                    <div className='vote-side-up'>
-                                                        <input className='vote-input' type="number"/>
-                                                        <button type='submit' className='vote-btn-up'>
-                                                            <BsArrowUpSquare />
-                                                        </button>
-                                                    </div>
-                                                    
-                                                </form>
-                                                <form action="" >
-                                                    <div className='vote-count'>{Number(prop.downVotes)}</div>
-                                                    <div className='vote-side-down'>
-                                                        <button type='submit' className='vote-btn-down'>
-                                                            <BsArrowDownSquare />
-                                                        </button>
-                                                        <input className='vote-input' type="number"/>
-                                                    </div>  
-                                                </form>
-                                            </div>
-                                        </div>
-                                        <div className='prop-created'>Created by: {prop.creator}</div>
-                                        <div className='time-wrap'>
-                                            <div>Created: {Number(prop.creationTime)}</div>
-                                            <div>Duration: {Number(prop.duration)}</div>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                            ))
-                        }
-                    </div>
+                    <PropStats 
+                        userCredits={Number(userCreditBal)}
+                        orgTokenSupply={Number(orgTokenSupply)}
+                        memberCount={Number(memberCount)}/>
+                    <PropList 
+                        contract={contract}
+                        currentOID={currentOID}
+                        orgArray={orgArray}
+                        userCredits={Number(userCreditBal)}
+                        />
                 </div>
                 :
                 <div>No Proposals</div>

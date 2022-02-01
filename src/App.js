@@ -154,24 +154,23 @@ function App() {
           <Route exact path="/" element={
             <Showcase />
           }/>
-          {
-            orgActive ?
-              <Route exact path="/create/proposal" element={
-                <CreateProps
-                  connected={connected} 
-                  connect={Connect}
-                  abi={abi}
-                  contract={contract}/>
-              }/>
-            :
-            <Route exact path="/create/org" element={ 
-              <CreateOrg 
-                connected={connected} 
-                connect={Connect}
-                abi={abi}
-                contract={contract}/>
-            }/>
-          }
+
+          <Route exact path="/create/proposal" element={
+            <CreateProps
+              connected={connected} 
+              connect={Connect}
+              abi={abi}
+              contract={contract}/>
+          }/>
+
+          <Route exact path="/create/org" element={ 
+            <CreateOrg 
+              connected={connected} 
+              connect={Connect}
+              abi={abi}
+              contract={contract}/>
+          }/>
+
           <Route exact path="/org" element={
             <OrgPage 
               contract={getContract}
