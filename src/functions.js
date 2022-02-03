@@ -29,7 +29,7 @@ export const getContractMeta = (chainId, setMeta) => {
     fetch(url)
       .then(res => res.json())
       .then(data => {
-        setMeta(data.data.items)  
+        setMeta(data.data.items) 
       })
   }
 }

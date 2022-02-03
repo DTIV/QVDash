@@ -13,11 +13,18 @@ a{
 
 :root{
   ---brad: 0.5em;
+  ---bg-col: #121212;
+  ---bg-txt-col: #fff;
+  ---brdr-col: rgb(37, 37, 37);
+  ---el1-col: #1d1d1d;
+  ---el2-col: #212121;
 }
 
 body{
   font-family: 'Print Clearly', sans-serif;
   font-size: 1.3rem;
+  background-color: var(---bg-col);
+  color: var(---bg-txt-col);
 }
 .inner-body{
   margin: 0 3rem;

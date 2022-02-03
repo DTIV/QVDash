@@ -8,7 +8,9 @@ import { useEffect, useState } from 'react';
 const Voting = (props) => {
     
     useEffect(() => {
-        props.checkResults(props.pid, props.oid, props.contract)
+        if(props.getResults){
+            props.checkResults(props.pid, props.oid, props.contract)
+        }
     }, [props.getResults]);
     
     if(props.getResults){

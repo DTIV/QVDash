@@ -12,7 +12,7 @@ const CreateProps = (props) => {
     const contractAddress = props.contract
 
     const [propTitle, setPropTitle] = useState("");
-    const [getDuration, setDuration] = useState(43200);
+    const [getDuration, setDuration] = useState(300);
     const [organization, setOrg] = useState("");
     const [getError, setgetError] = useState(0);
     const [blog, setBlog] = useState("")
@@ -57,6 +57,7 @@ const CreateProps = (props) => {
                                 <select className='duration-sel' onChange={(e) => {
                                     setDuration(e.target.value)
                                 }}>
+                                    <option value={300} data-num={300}>5min</option>
                                     <option value={43200} data-num={43200}>12h</option>
                                     <option value={86400} data-num={86400}>Day</option>
                                     <option value={604800} data-num={604800}>Week</option>

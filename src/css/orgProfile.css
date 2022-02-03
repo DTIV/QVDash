@@ -1,8 +1,8 @@
 .prop-card{
-    border: black solid 1px;
+    border: var(---brdr-col) solid 1px;
     padding: 1rem;
     border-radius: var(---brad);
-    
+    background-color: var(---el1-col);
 }
 
 .proplist-wrap{
