@@ -168,7 +168,8 @@ function App() {
               connected={connected} 
               connect={Connect}
               abi={abi}
-              contract={contract}/>
+              contract={contract}
+              currentNetwork={getCurrentNetwork}/>
           }/>
 
           <Route exact path="/org" element={

@@ -1,15 +1,13 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: GPL-3.0-or-later
 pragma solidity >=0.8.0;
 
 contract supportContract{
-
     //voter structure
     struct Voter{
         bool voted;
         uint256 votesCount;
     }
-    //proposal status 
-    enum ProposalStatus {STARTED, ENDED}
+
     //proposal structure
     struct Proposal{
         address creator; 
@@ -21,7 +19,6 @@ contract supportContract{
         uint256 creationTime; //time when the block was created
         uint256 duration; //duration of proposal
         string description;
-        ProposalStatus status; //current status
     }
 
     event newProposalCreated(
@@ -36,6 +33,7 @@ contract supportContract{
     //organization structure
     struct Organization{
         address creator;
+        address contractAddress;
         uint oid;
         bool isActive;
         string name;
@@ -68,6 +66,4 @@ contract supportContract{
             z = 1;
         }
     }
-
-
 }

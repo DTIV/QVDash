@@ -72,3 +72,18 @@
     margin: 3rem 0;
     text-align: center;
 }
+
+.vote-end-wrap{
+    text-align: center;
+}
+
+.result-stats{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.result-outcome{
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+}

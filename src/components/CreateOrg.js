@@ -1,8 +1,10 @@
 import React from 'react';
 import { ethers } from "ethers";
 import { detectProvider } from '../functions';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Error from './Error';
+import { getContractMeta } from '../functions';
+
 const CreateOrg = (props) => {
     const abi = props.abi
     const contractAddress = props.contract
@@ -10,8 +12,15 @@ const CreateOrg = (props) => {
     const [orgName, setOrgName] = useState("");
     const [getCPV, setCPV] = useState(0);
     const [organization, setOrg] = useState("");
+    const [orgAddress, setOrgAddress] = useState("");
     const [getError, setgetError] = useState(0);
+    const [meta, setMeta] = useState("");
 
+    useEffect(() => {
+        getContractMeta(137, setMeta)
+    }, [props.currentNetwork])
+
+    console.log(meta)
     const createOrg = async () => {
         console.log("submitting")
         const provider = detectProvider()
@@ -19,8 +28,12 @@ const CreateOrg = (props) => {
         const signer = eth.getSigner()
         const address = await signer.getAddress()
         const Contract = new ethers.Contract(contractAddress, abi, signer)
-        const org = (await Contract.createNewOrganization(orgName, getCPV)).toString()
+        const org = (await Contract.createNewOrganization(orgName, getCPV, orgAddress)).toString()
         setOrg(org)
+    }
+
+    if(meta){
+        const fil = meta.filter((proposal) => (proposal.contract_name == "KIWI Token"))
     }
 
     return (
@@ -36,6 +49,9 @@ const CreateOrg = (props) => {
                             e.preventDefault()
                             createOrg()
                         }}>
+                            <div>
+                                <input className='name-input' type="text" placeholder='Contract Address' onChange={(e)=>(setOrgAddress(e.target.value))}/>
+                            </div>
                             <div>
                                 <input className='name-input' type="text" placeholder='Name' onChange={(e)=>(setOrgName(e.target.value))}/>
                             </div>

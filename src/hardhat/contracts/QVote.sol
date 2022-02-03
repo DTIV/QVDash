@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: GPL-3.0-or-later
 pragma solidity >=0.8.0;
 import "./supportContract.sol";
 
@@ -13,6 +13,7 @@ contract QVote is supportContract{
     Proposal[] public allProposals;
     uint public organizationCount=0;
     mapping(address=>uint)public OrganizationOwners;
+    mapping(address=>bool)public OrganizationContracts;
     Organization[]public  organizations;
     mapping(uint =>Proposal[])public proposalList; //proposals in the organization
     mapping(uint => mapping(address =>uint256)) public userBalance; //user -> orgID -> balance
@@ -41,12 +42,12 @@ contract QVote is supportContract{
     //helper function
     //mints voting token
     function mint(uint _orgID)public  {
-        require(msg.sender != address(0), "invalid account");
+        require(msg.sender != address(0), "");
         if(isMember[_orgID][msg.sender] == false){
             isMember[_orgID][msg.sender] = true;
             OrgUsers[_orgID].push(msg.sender);
         }else{
-            require(canMint[_orgID][msg.sender]==true, "Minting Not Allowed for this address");
+            require(canMint[_orgID][msg.sender]==true, "Minting Not Allowed");
         }
         canMint[_orgID][msg.sender] = false;
         uint256 amount = organizations[_orgID].creditsPerVoter;
@@ -55,11 +56,14 @@ contract QVote is supportContract{
         
     }
 
-    function createNewOrganization(string memory _name, uint256 _cpv)external{
-        require( organizations.length==0 || organizations[OrganizationOwners[msg.sender]].isActive==false,"An organization with this address already exists!");
+    function createNewOrganization(string memory _name, uint256 _cpv, address account)external{
+        require( organizations.length==0 || organizations[OrganizationOwners[msg.sender]].isActive==false,"You Already created an Organization!");
+        require(OrganizationContracts[account] == false, "Contract already exists");
+        OrganizationContracts[account] = true;
         OrganizationOwners[msg.sender]=organizationCount;
         organizations.push(Organization({
             creator : msg.sender,
+            contractAddress: account,
             oid : organizationCount,
             isActive : true,
             name : _name,
@@ -68,22 +72,15 @@ contract QVote is supportContract{
             totalTokenSupply : 0
         }));
         organizationCount++;
-        // emit newOrganizationCreated(
-        //     organizations[organizationCount-1].name,
-        //     organizations[organizationCount-1].creator,
-        //     organizationCount,
-        //     OrganizationOwners[msg.sender],
-        //     organizations[organizationCount-1].creditsPerVoter
-        // );
     }
 
     /* ############################# Proposal part starts here  ############################################## */  
 
-    //creates a new proposal with description and duration (only owners)
+    //creates a new proposal with description and duration
     function createNewProposal(uint _duration ,string calldata _title, string calldata _desc)external{
-        require(_duration >0, "Duration should be more than 0");
+        require(_duration >0, "Wrong Duration");
         uint _orgID = OrganizationOwners[msg.sender];
-        require(organizations[_orgID].isActive==true,"No active organization with current address!");
+        require(organizations[_orgID].isActive==true,"No active organization");
        
         uint _pID = organizations[_orgID].ProposalCount;
         // Proposal storage newProp = organizations[_orgID].proposalList[_pID];
@@ -94,7 +91,6 @@ contract QVote is supportContract{
         newProp.description = _desc;
         newProp.duration = _duration;
         newProp.creationTime = block.timestamp;
-        newProp.status = ProposalStatus.STARTED;
         newProp.upVotes=0;
         newProp.downVotes=0;
         proposalList[_orgID].push(newProp);
@@ -103,23 +99,12 @@ contract QVote is supportContract{
         // emit newProposalCreated(_orgID,_title, _pID,msg.sender,_duration, _desc);
     }
 
-    //checks the current status of proposal  - STARTED , TALLY , ENDED 
-    function checkProposalStatus(uint _orgID ,uint _pID)public view isvalidOrganizationID(_orgID)  isvalidProposalID(_orgID ,_pID) returns(ProposalStatus){
-        return proposalList[_orgID][_pID].status;
-    }
 
     //checks proposal duration
     function checkProposalDuration(uint _orgID ,uint _pID)public view isvalidOrganizationID(_orgID)  isvalidProposalID(_orgID ,_pID)returns (uint) {
         return proposalList[_orgID][_pID].duration;
     }
 
-    // sets proposal with ID  _pID to ENDED STATE if its in TALLY STATE
-    function setToEnded(uint _orgID ,uint _pID) external isvalidOrganizationID(_orgID)  isvalidProposalID(_orgID ,_pID){
-        Proposal[] storage Proposals =  proposalList[_orgID];
-        require(Proposals[_pID].status == ProposalStatus.STARTED,"Voting isn't ongoing!");
-        require((block.timestamp -Proposals[_pID].creationTime )>= checkProposalDuration(_orgID,_pID),"voting havent ended yet!");
-        Proposals[_pID].status = ProposalStatus.ENDED;
-    }
 
     // counts total number of upvotes and down votes of a particular proposal
     function totalVotes(uint _orgID ,uint _pid)public view returns (uint256, uint256){
@@ -133,7 +118,6 @@ contract QVote is supportContract{
 
     // casts vote to proposal with id _pID , here 'vote' is the type of vote (upvote : 1 , downvote : 0) and numvotes is the number of token spent on voting
     function castVote(uint _orgID, uint _pID,uint vote, uint numVotes)external isvalidOrganizationID(_orgID) isvalidProposalID(_orgID,_pID){
-        require(checkProposalStatus(_orgID,_pID)==ProposalStatus.STARTED,"voting isn't ongoing");
         Proposal[] storage Proposals =proposalList[_orgID];
         require((block.timestamp -Proposals[_pID].creationTime ) < checkProposalDuration(_orgID ,_pID),"voting has ended!");
         require(yetToVote(_orgID ,_pID,msg.sender),"Voter have already voted");
@@ -166,7 +150,7 @@ contract QVote is supportContract{
 
     //checks number of voting token user has
     function checkUserBalance(uint _orgID)public view returns(uint256){
-        require(msg.sender != address(0), "invalid account");
+        require(msg.sender != address(0), "invalid acc");
         return userBalance[_orgID][msg.sender];    
     }
 
@@ -183,7 +167,6 @@ contract QVote is supportContract{
     }
     // sets minting allowed for every user
     function allowMinting(uint _orgID) public{
-        require(organizations.length>0 && OrgUsers[_orgID].length>0 ,"No organization exists");
         address[] memory userList = OrgUsers[_orgID];
         for (uint i=0; i < userList.length; i++) {
             address Addr = userList[i];
@@ -192,7 +175,6 @@ contract QVote is supportContract{
     }
     // Blocks minting for every user
     function blockMinting(uint _orgID) public{
-        require(organizations.length>0 && OrgUsers[_orgID].length>0 ,"No organization exists");
         address[] memory userList = OrgUsers[_orgID];
         for (uint i=0; i < userList.length; i++) {
             address Addr = userList[i];
@@ -296,26 +278,22 @@ contract QVote is supportContract{
         return OrgUsers[_orgID].length;
     }
 
-        // helper function to create organization when theres already existing data 
-    function createNewOrganizationhelper(string memory _name, uint256 _cpv, address account)external{
-        require( organizations.length==0 || organizations[OrganizationOwners[account]].isActive==false,"An organization with this address already exists!");
-        OrganizationOwners[account]=organizationCount;
-        organizations.push(Organization({
-            creator : account,
-            oid : organizationCount,
-            isActive : true,
-            name : _name,
-            ProposalCount : 0,
-            creditsPerVoter : _cpv,
-            totalTokenSupply : 0
-        }));
-        organizationCount++;
-        // emit newOrganizationCreated(
-        //     organizations[organizationCount-1].name,
-        //     organizations[organizationCount-1].creator,
-        //     organizationCount,
-        //     OrganizationOwners[account],
-        //     organizations[organizationCount-1].creditsPerVoter
-        // );
-    }
+
+    //helper function to create organization when theres already existing data 
+    // function createNewOrganizationhelper(string memory _name, uint256 _cpv, address account)external{
+    //     require( organizations.length==0 || organizations[OrganizationOwners[account]].isActive==false,"An organization with this address already exists!");
+    //     OrganizationOwners[account]=organizationCount;
+    //     organizations.push(Organization({
+    //         creator : msg.sender,
+    //         contractAddress : account,
+    //         oid : organizationCount,
+    //         isActive : true,
+    //         name : _name,
+    //         ProposalCount : 0,
+    //         creditsPerVoter : _cpv,
+    //         totalTokenSupply : 0
+    //     }));
+    //     organizationCount++;
+       
+    // }
 }
