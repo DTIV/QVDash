@@ -220,7 +220,7 @@ contract QVote is supportContract{
     }
 
     //to return  organization with id _orgID;
-    function getUserOrganization(uint _orgID) public view returns(Organization memory){
+    function getOrganization(uint _orgID) public view returns(Organization memory){
         if(organizations.length==0 || organizations[_orgID-1].isActive==false){
             Organization memory _org;
             return _org;
@@ -229,23 +229,23 @@ contract QVote is supportContract{
     }
 
     //to return users organization if any;
-    function getMyOrganization() public view returns(Organization memory){
-        if(organizations.length==0 || organizations[OrganizationOwners[msg.sender]-1].isActive==false|| OrganizationOwners[msg.sender]==0){
-            Organization memory _org;
-            return _org;
-        }
-        return organizations[OrganizationOwners[msg.sender]-1] ;
-    }
+    // function getMyOrganization() public view returns(Organization memory){
+    //     if(organizations.length==0 || organizations[OrganizationOwners[msg.sender]-1].isActive==false|| OrganizationOwners[msg.sender]==0){
+    //         Organization memory _org;
+    //         return _org;
+    //     }
+    //     return organizations[OrganizationOwners[msg.sender]-1] ;
+    // }
 
     //to return array of proposals of a user
-    function getuserProposals()public view returns (Proposal[]memory){
-        if(organizations.length==0 || proposalList[OrganizationOwners[msg.sender]].length==0|| OrganizationOwners[msg.sender]==0){
-            Proposal[] memory _p;
-            return _p;
-        }
-        // require(organizations[OrganizationOwners[msg.sender]].isActive==true,"No active organizations");
-        return proposalList[OrganizationOwners[msg.sender]];
-    }
+    // function getuserProposals()public view returns (Proposal[]memory){
+    //     if(organizations.length==0 || proposalList[OrganizationOwners[msg.sender]].length==0|| OrganizationOwners[msg.sender]==0){
+    //         Proposal[] memory _p;
+    //         return _p;
+    //     }
+    //     // require(organizations[OrganizationOwners[msg.sender]].isActive==true,"No active organizations");
+    //     return proposalList[OrganizationOwners[msg.sender]];
+    // }
 
     //returns array of proposal for organisation with orgid
     function getOrgProposals(uint orgID)public view isvalidOrganizationID(orgID) returns (Proposal[]memory) {

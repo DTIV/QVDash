@@ -19,6 +19,9 @@ const OrgProfile = (props) => {
     
     useEffect(() => {
         const QVContract = props.contract;
+
+        
+        
         setContract(QVContract)
         if(QVContract){
             getProps(QVContract)
@@ -42,13 +45,14 @@ const OrgProfile = (props) => {
     }
 
     const getProps = async (QVContract) => {
-        const propz = await QVContract.getuserProposals();
+        const propz = await QVContract.getOrgProposals(currentOID);
+        console.log(propz)
         setOrgArray(propz)
         return propz
     }
 
     const getOrginization = async (QVContract) => {
-        const og = await QVContract.getUserOrganization(currentOID)
+        const og = await QVContract.getOrganization(currentOID)
         setCurrentOrg(og)
         return(og)
     }
