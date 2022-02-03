@@ -1,6 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import OrgCard from './OrgCard';
 
 const OrgPage = (props) => {
     const [orgArray, setOrgArray] = useState("");
@@ -10,6 +11,7 @@ const OrgPage = (props) => {
         setOrgArray(orgs)
         return orgs
     }
+    
     useEffect(() => {
         const QVContract = props.contract;
         if(QVContract){
@@ -17,6 +19,7 @@ const OrgPage = (props) => {
         }
     }, [props.contract]);
 
+    
     return (
         <div>
             <div className='lrg-title'>ORGANIZATIONS</div>
@@ -35,16 +38,13 @@ const OrgPage = (props) => {
                     <div className='orglist-wrap'>
                         {
                             orgArray.map((org)=>(
-                                <Link to={`/org/${Number(org.oid)}`} key={org.oid} className='orglist-card'>
-                                    <div className='otop-wrap'>
-                                        <div className='org-name'>{org.name}</div>
-                                        <div><small>ID#</small>{Number(org.oid)}</div>
-                                    </div>
-                                    <div className='oprop-wrap'>
-                                        <div className='prop-count'>{Number(org.ProposalCount)}</div>
-                                        <div>Proposals</div>
-                                    </div>
-                                </Link>
+                                <div key={org.oid}>
+                                    <OrgCard 
+                                        oid={org.oid}
+                                        name={org.name}
+                                        ProposalCount={org.ProposalCount} />
+                                </div>
+                                
                             ))
                         }
                     </div>

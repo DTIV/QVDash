@@ -2,15 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import ConnectButton from './ConnectButton';
-import { Chains } from '../functions';
+import { Chains, getContractMeta } from '../functions';
 
 const Header = (props) => {
     const [chains, setChains] = useState("");
-    
+
     useEffect(() => {
         const elem = document.getElementById('network-select');
         elem.value = props.currentNetwork
-        Chains(process.env.REACT_APP_COVKEY, setChains)
+        const chains = Chains(setChains)
     }, [props.currentNetwork])
 
     return (
@@ -47,19 +47,25 @@ const Header = (props) => {
             {
                 chains ?
                 <select className='connect-btn' name="" id="network-select">
+                    <option value={4}>Rinkeby</option>
                     {
                         chains.map((chain) => (
                             <option key={chain.chain_id} value={chain.chain_id}>{chain.label}</option>
                         ))
                     }
-                    <option value={4}>Rinkeby</option>
                 </select>
-                : 
+                :
                 <select className='connect-btn' name="" id="network-select">
                     {/* ADD NETWORKS HERE */}
+                    <option value={1}>Mainnet</option>
                     <option value={4}>Rinkeby</option>
+                    <option value={56}>BSC</option>
+                    <option value={137}>MATIC</option>
+                    <option value={43114}>AVAX</option>
                 </select>
+                
             }
+            
             <div>
                 <ConnectButton connecting={props.connecting} connected={props.connected} connect={props.connect} />
             </div>

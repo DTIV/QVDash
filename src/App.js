@@ -11,7 +11,7 @@ import CreateProps from "./components/CreateProps";
 import Showcase from "./components/Showcase"
 import OrgPage from "./components/OrgPage";
 import OrgProfile from "./components/OrgProfile";
-
+import { getContractMeta } from './functions';
 
 /*
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
@@ -33,6 +33,7 @@ function App() {
   const [isOrg, setIsOrg] = useState(false)
   const [getContract, setContract] = useState("")
   const [orgActive, setOrgActive] = useState(false)
+  const [meta, setMeta] = useState("");
   const contract = ContractAddress.Token
   const abi = ContractAbi.abi
   
@@ -82,6 +83,10 @@ function App() {
     }
   }, [connected, getProvider])
   
+  useEffect(() => {
+    getContractMeta(137, setMeta)
+  }, [getCurrentNetwork])
+
   const Connect = async () => {
     // METAMASK CONNECT
     if(getProvider) {
@@ -175,12 +180,14 @@ function App() {
           <Route exact path="/org" element={
             <OrgPage 
               contract={getContract}
-              orgActive={orgActive}/>
+              orgActive={orgActive}
+              currentNetwork={getCurrentNetwork}/>
           }/>
           <Route exact path="/org/:id" element={
             <OrgProfile 
               contract={getContract}
-              orgActive={orgActive}/>
+              orgActive={orgActive}
+              meta={meta}/>
           }/>
         </Routes>
       </div>

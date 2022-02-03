@@ -43,6 +43,7 @@ const PropList = ({contract, currentOID, orgArray, userCredits }) => {
         return "ACTIVE"
     }
 
+
     const checkResults = async (pId, orgId, contract) => {
         if(contract){
             const total = await contract.totalVotes(pId, orgId)

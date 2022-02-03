@@ -7,14 +7,10 @@ import { useEffect, useState } from 'react';
 
 const Voting = (props) => {
     
-
     useEffect(() => {
-        console.log("Hello")
         props.checkResults(props.pid, props.oid, props.contract)
     }, [props.getResults]);
     
-    
-
     if(props.getResults){
         return (
             <div className='vote-end-wrap'>

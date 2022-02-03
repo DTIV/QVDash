@@ -57,7 +57,7 @@ contract QVote is supportContract{
     }
 
     function createNewOrganization(string memory _name, uint256 _cpv, address account)external{
-        require( organizations.length==0 || organizations[OrganizationOwners[msg.sender]].isActive==false,"You Already created an Organization!");
+        // require( organizations.length==0 || organizations[OrganizationOwners[msg.sender]].isActive==false,"You Already created an Organization!");
         require(OrganizationContracts[account] == false, "Contract already exists");
         OrganizationContracts[account] = true;
         OrganizationOwners[msg.sender]=organizationCount;
@@ -99,12 +99,10 @@ contract QVote is supportContract{
         // emit newProposalCreated(_orgID,_title, _pID,msg.sender,_duration, _desc);
     }
 
-
     //checks proposal duration
     function checkProposalDuration(uint _orgID ,uint _pID)public view isvalidOrganizationID(_orgID)  isvalidProposalID(_orgID ,_pID)returns (uint) {
         return proposalList[_orgID][_pID].duration;
     }
-
 
     // counts total number of upvotes and down votes of a particular proposal
     function totalVotes(uint _orgID ,uint _pid)public view returns (uint256, uint256){
@@ -165,6 +163,7 @@ contract QVote is supportContract{
         if(isMember[_orgID][msg.sender]==false)return false;
         return canMint[_orgID][msg.sender];
     }
+
     // sets minting allowed for every user
     function allowMinting(uint _orgID) public{
         address[] memory userList = OrgUsers[_orgID];
@@ -173,6 +172,7 @@ contract QVote is supportContract{
             canMint[_orgID][Addr] = true;
         }
     }
+
     // Blocks minting for every user
     function blockMinting(uint _orgID) public{
         address[] memory userList = OrgUsers[_orgID];
@@ -205,7 +205,6 @@ contract QVote is supportContract{
         return organizations[OrganizationOwners[msg.sender]].creditsPerVoter;
     }
 
-
     //to return array of organizations;
     function getAllOrganization() public view returns(Organization[]memory){
         if(organizations.length==0){
@@ -232,7 +231,6 @@ contract QVote is supportContract{
         }
         return organizations[OrganizationOwners[msg.sender]] ;
     }
-
 
     //to return array of proposals of a user
     function getuserProposals()public view returns (Proposal[]memory){
@@ -270,6 +268,7 @@ contract QVote is supportContract{
         }
         return OrgUsers[_orgID];
     }
+    
     //returns count of member in organization
     function getOrgMembersCount(uint _orgID)public view returns (uint){
         if(organizations.length==0 || OrgUsers[_orgID].length==0){

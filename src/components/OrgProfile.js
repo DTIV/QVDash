@@ -10,6 +10,8 @@ const OrgProfile = (props) => {
     const [userCreditBal, setUserCreditBal] = useState(0);
     const [orgTokenSupply, setOrgTokenSupply] = useState(0);
     const [memberCount, setMemberCount] = useState(0);
+    const [currentOrg, setCurrentOrg] = useState("")
+    const [orgData, setOrgData] = useState("");
 
     const path = window.location.pathname
     const currentOID = Number(path.replace("/org/", ""))
@@ -23,9 +25,15 @@ const OrgProfile = (props) => {
             getUserCredit(QVContract)
             getTokenSupply(QVContract)
             getMemberCount(QVContract)
+            getOrginization(QVContract)
+            
         }
     }, [props.contract]);
 
+    useEffect(() => {
+        getCurrentOrgData(props.meta, currentOrg)
+    }, [props.meta, currentOrg]);
+    
     const mint = async () => {
         if(contract){
             console.log("minting tokens")
@@ -37,6 +45,12 @@ const OrgProfile = (props) => {
         const propz = await QVContract.getuserProposals();
         setOrgArray(propz)
         return propz
+    }
+
+    const getOrginization = async (QVContract) => {
+        const og = await QVContract.getUserOrganization(currentOID)
+        setCurrentOrg(og)
+        return(og)
     }
 
     const getUserCredit = async (QVContract) => {
@@ -57,8 +71,30 @@ const OrgProfile = (props) => {
         return ts
     }
 
+    const getCurrentOrgData = (meta, org) => {
+        const onch = org.contractAddress
+        if(onch){
+            const addy = onch.toLowerCase()
+            const matcher = meta.filter((proposal) => (proposal.contract_address == addy))
+            const org = matcher[0]
+            setOrgData(org)
+        }
+    }
+
     return (
         <div>
+            {
+                orgData ?
+                <div>
+                    <div className='lrg-title'>
+                        {orgData.contract_name}
+                    </div>
+                    
+                    <img src={orgData.logo_url} alt="" />
+                </div>
+                :<></>
+            }
+            
             <div className='mint-btn'>
                 <button className='a-btn' onClick={mint}>Get Credits</button>
             </div>
@@ -75,7 +111,7 @@ const OrgProfile = (props) => {
                         currentOID={currentOID}
                         orgArray={orgArray}
                         userCredits={Number(userCreditBal)}
-                        />
+                        meta={props.meta}/>
                 </div>
                 :
                 <div>No Proposals</div>
