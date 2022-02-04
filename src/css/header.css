@@ -31,7 +31,8 @@
     font-size: 1.2rem;
 }
 
-.connect-btn{
+.connect-btn,
+.select-btn{
     color: var(---bg-txt-col);
     padding: 0.5rem;
     background: inherit;
@@ -44,4 +45,9 @@
     display: grid;
     grid-template-columns: repeat(3, auto);
     grid-gap: 2rem;
+}
+
+.select-option{
+    background-color: var(---bg-col);
+
 }

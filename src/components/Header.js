@@ -30,15 +30,7 @@ const Header = (props) => {
                 <Link to="/create/org">
                     Create
                 </Link>
-            }
-            
-            <Link to="/create/org">
-                Votes
-            </Link>
-            <Link to="/org">
-                Organizations
-            </Link>
-            
+            } 
         </div>
         <div className='sidenav-netwrap'>
             <div className='account-menu-txt'>
@@ -46,16 +38,16 @@ const Header = (props) => {
             </div>
             {
                 chains ?
-                <select className='connect-btn' name="" id="network-select">
-                    <option value={4}>Rinkeby</option>
+                <select className='select-btn' name="" id="network-select">
+                    <option className='select-option' value={4}>Rinkeby</option>
                     {
                         chains.map((chain) => (
-                            <option key={chain.chain_id} value={chain.chain_id}>{chain.label}</option>
+                            <option className='select-option' key={chain.chain_id} value={chain.chain_id}>{chain.label}</option>
                         ))
                     }
                 </select>
                 :
-                <select className='connect-btn' name="" id="network-select">
+                <select className='select-btn' name="" id="network-select">
                     {/* ADD NETWORKS HERE */}
                     <option value={1}>Mainnet</option>
                     <option value={4}>Rinkeby</option>

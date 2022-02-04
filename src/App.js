@@ -8,7 +8,6 @@ import ContractAddress from './contractData/contracts-address.json'
 import ContractAbi from './contractData/abi.json'
 import { detectProvider } from './functions'
 import CreateProps from "./components/CreateProps";
-import Showcase from "./components/Showcase"
 import OrgPage from "./components/OrgPage";
 import OrgProfile from "./components/OrgProfile";
 import { getContractMeta } from './functions';
@@ -156,10 +155,6 @@ function App() {
       orgActive={orgActive}/>
       <div className="inner-body">
         <Routes >
-          <Route exact path="/" element={
-            <Showcase />
-          }/>
-
           <Route exact path="/create/proposal" element={
             <CreateProps
               connected={connected} 
@@ -177,7 +172,7 @@ function App() {
               currentNetwork={getCurrentNetwork}/>
           }/>
 
-          <Route exact path="/org" element={
+          <Route exact path="/" element={
             <OrgPage 
               contract={getContract}
               orgActive={orgActive}

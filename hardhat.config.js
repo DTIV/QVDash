@@ -29,6 +29,10 @@ module.exports = {
     ganache:{
       url: process.env.REACT_APP_GANACHE_URL,
       accounts: [process.env.REACT_APP_GANACHE_PK]
+    },
+    kovan:{
+      url: process.env.REACT_APP_ALCHEMY_KOVAN,
+      accounts:[PRIVATE_KEY]
     }
   },
   paths: {

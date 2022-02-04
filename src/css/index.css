@@ -46,12 +46,13 @@ body{
   text-align: center;
 }
 .a-btn{
-  border: solid 1px;
+  border: var(---brdr-col) solid 1px;
   padding: 0.6rem 1rem;
   font-size: 1.3rem;
   border-radius: var(---brad);
   background-color: inherit;
   cursor: pointer;
+  color: var(---bg-txt-col);
 }
 .lrg-title{
   font-size: 3rem;

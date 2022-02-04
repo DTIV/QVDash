@@ -19,7 +19,6 @@ const OrgPage = (props) => {
         }
     }, [props.contract]);
 
-    console.log(orgArray)
     return (
         <div>
             <div className='lrg-title'>ORGANIZATIONS</div>

@@ -12,6 +12,7 @@
     opacity: 0;
     animation: fade-in 1s ease-in forwards;
     min-width: 40rem;
+    background-color: var(---el1-col);
 }
 
 .org-form{
