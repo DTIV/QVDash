@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import PropStats from './PropStats';
 import PropList from './PropList';
@@ -15,40 +15,39 @@ const OrgProfile = (props) => {
 
     const path = window.location.pathname
     const currentOID = Number(path.replace("/org/", ""))
+    const QVContract = props.contract;
+    const mounted = useRef(false)
+    const meta = props.meta
 
-    
+    const getProps = async (QVContract) => {
+        const propz = await QVContract.getOrgProposals(currentOID);
+        console.log(mounted)
+        if(mounted === null){
+            return;
+        }
+        setOrgArray(propz)
+    }
+
     useEffect(() => {
-        const QVContract = props.contract;
-
-        
-        
-        setContract(QVContract)
+        setContract(QVContract);
         if(QVContract){
             getProps(QVContract)
             getUserCredit(QVContract)
             getTokenSupply(QVContract)
             getMemberCount(QVContract)
             getOrginization(QVContract)
-            
         }
-    }, [props.contract]);
+    }, [QVContract]);
 
     useEffect(() => {
-        getCurrentOrgData(props.meta, currentOrg)
-    }, [props.meta, currentOrg]);
+        getCurrentOrgData(meta, currentOrg)
+    }, [, currentOrg]);
     
     const mint = async () => {
         if(contract){
             console.log("minting tokens")
             const mint = contract.mint(currentOID);
         }
-    }
-
-    const getProps = async (QVContract) => {
-        const propz = await QVContract.getOrgProposals(currentOID);
-        console.log(propz)
-        setOrgArray(propz)
-        return propz
     }
 
     const getOrginization = async (QVContract) => {
@@ -102,24 +101,24 @@ const OrgProfile = (props) => {
             <div className='mint-btn'>
                 <button className='a-btn' onClick={mint}>Get Credits</button>
             </div>
-            {
-                orgArray.length > 0 ?
+            <div>
+                <div className='lrg-title'>Proposals</div>
                 <div>
-                    <div className='lrg-title'>Proposals</div>
                     <PropStats 
                         userCredits={Number(userCreditBal)}
                         orgTokenSupply={Number(orgTokenSupply)}
                         memberCount={Number(memberCount)}/>
-                    <PropList 
-                        contract={contract}
-                        currentOID={currentOID}
-                        orgArray={orgArray}
-                        userCredits={Number(userCreditBal)}
-                        meta={props.meta}/>
                 </div>
-                :
-                <div>No Proposals</div>
-            }
+                
+                <PropList
+                    contract={contract}
+                    currentOID={currentOID}
+                    orgArray={orgArray}
+                    userCredits={Number(userCreditBal)}
+                    meta={meta}/>
+            </div>
+
+            {/* } */}
         </div>
     );
 };
