@@ -66,11 +66,15 @@ const CreateProps = (props) => {
                                     <option value={7257600} data-num={7257600}>3 Months</option>
                                 </select>
                             </div>
-                            <CKEditor
-                                editor={ ClassicEditor }
-                                data=""
-                                onChange = {handleOnChange}
-                            />
+                            <div className='ckedit'>
+                                <CKEditor
+                                    className='ckedit'
+                                    editor={ ClassicEditor }
+                                    data=""
+                                    onChange = {handleOnChange}
+                                />
+                            </div>
+                            
                             {
                                 (propTitle.length >= 10) ?
                                 <div>

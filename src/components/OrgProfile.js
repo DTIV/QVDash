@@ -1,8 +1,8 @@
 import React from 'react';
 import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import PropStats from './PropStats';
-import PropList from './PropList';
+import PropStats from './Proposals/PropStats';
+import PropList from './Proposals/PropList';
 
 const OrgProfile = (props) => {
     const [orgArray, setOrgArray] = useState("");
@@ -12,20 +12,19 @@ const OrgProfile = (props) => {
     const [memberCount, setMemberCount] = useState(0);
     const [currentOrg, setCurrentOrg] = useState("")
     const [orgData, setOrgData] = useState("");
+    const [allOrgs, setAllOrgs] = useState("");
+
 
     const path = window.location.pathname
     const currentOID = Number(path.replace("/org/", ""))
     const QVContract = props.contract;
     const mounted = useRef(false)
     const meta = props.meta
-
+    
     const getProps = async (QVContract) => {
         const propz = await QVContract.getOrgProposals(currentOID);
-        console.log(mounted)
-        if(mounted === null){
-            return;
-        }
         setOrgArray(propz)
+        setAllOrgs(propz)
     }
 
     useEffect(() => {
@@ -84,6 +83,26 @@ const OrgProfile = (props) => {
         }
     }
 
+    const filterEnded = () => {
+        const ctime = (Date.now()/1000);
+        const newArray = allOrgs.filter((proposal) => (
+            (Number(proposal.creationTime) + Number(proposal.duration)) < (ctime)
+        ))
+        setOrgArray(newArray)
+    }
+
+    const filterActive = () => {
+        const ctime = (Date.now()/1000);
+        const newArray = allOrgs.filter((proposal) => (
+            (Number(proposal.creationTime) + Number(proposal.duration)) > (ctime)
+        ))
+        setOrgArray(newArray)
+    }
+
+    const filterAll= () => {
+        setOrgArray(allOrgs)
+    }
+
     return (
         <div>
             {
@@ -109,7 +128,17 @@ const OrgProfile = (props) => {
                         orgTokenSupply={Number(orgTokenSupply)}
                         memberCount={Number(memberCount)}/>
                 </div>
-                
+                <div className='filter-wrap'>
+                    <div className='filterbtn-wrap'>
+                        <button className='filter-btn' onClick={filterAll}>All</button>
+                    </div>
+                    <div className='filterbtn-wrap'>
+                        <button className='filter-btn' onClick={filterActive}>Active</button>
+                    </div>
+                    <div className='filterbtn-wrap'>
+                        <button className='filter-btn' onClick={filterEnded}>Ended</button>
+                    </div>
+                </div>
                 <PropList
                     contract={contract}
                     currentOID={currentOID}
@@ -117,8 +146,6 @@ const OrgProfile = (props) => {
                     userCredits={Number(userCreditBal)}
                     meta={meta}/>
             </div>
-
-            {/* } */}
         </div>
     );
 };

@@ -6,14 +6,12 @@ import { BsArrowDownSquareFill,
 import { useEffect, useState } from 'react';
 
 const Voting = (props) => {
-    
-    useEffect(() => {
-        if(props.getResults){
-            props.checkResults(props.pid, props.oid, props.contract)
-        }
-    }, [props.getResults]);
-    
-    if(props.getResults){
+    const creation = props.creation
+    const duration = props.duration
+    const edate = creation + duration
+    const cdate = Date.now()/1000
+
+    if(cdate > edate){
         return (
             <div className='vote-end-wrap'>
                 <div className='sm-title'>Voting Has Ended.</div>

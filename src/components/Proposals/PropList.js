@@ -1,12 +1,9 @@
 import React from 'react';
 import { useEffect, useState, useRef } from 'react';
-import { BsArrowDownSquareFill, 
-    BsArrowDownSquare, 
-    BsArrowUpSquareFill, 
-    BsArrowUpSquare } from "react-icons/bs";
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
-import Voting from './Voting';
+import Voting from '../Voting';
 import PropTime from './PropTime';
+import PropTitle from './PropTitle';
 
 const PropList = ({contract, currentOID, orgArray, userCredits }) => {
     const [downAmount, setDownAmount] = useState(0);
@@ -14,9 +11,6 @@ const PropList = ({contract, currentOID, orgArray, userCredits }) => {
     const [getResults, setResults] = useState(false)
     const [votesUp, setVotesUp] = useState(0);
     const [votesDown, setVotesDown] = useState(0);
-    const [result, setResult] = useState("")
-
-    const mounted = useRef(false)
 
     const voteUp = async (pId) => {
         console.log("voting up")
@@ -36,41 +30,23 @@ const PropList = ({contract, currentOID, orgArray, userCredits }) => {
     }
 
     
-
-    const checkResults = async (pId, orgId, contract) => {
-        if(contract){
-            const total = await contract.totalVotes(orgId, pId)
-            const upvotes = Number(total[0])
-            const downvotes = Number(total[1])
-            setVotesUp(upvotes)
-            setVotesDown(downvotes)
-            if(getResults){
-                if(upvotes > downvotes){
-                    setResult("PASSED")
-                }else if(upvotes < downvotes){
-                    setResult("FAILED")
-                }else if(upvotes == downvotes){
-                    setResult("EQUAL")
-                }
-            }
-        }
-    }
-
     const checkTime = (tx) => {
         setResults(tx)
     }
 
     if(orgArray){
+        
         return (
             <div className='proplist-wrap'>
                 {
                     orgArray.map((prop)=>(
                         <div key={Number(prop.pid)} className='prop-card'>
-                            <div className='title-wrap'>
-                                <div className='sm-title'>{prop.title}</div>
-                                <div className='result-outcome'>{result}</div>
-                                <div><small>ID#</small>{Number(prop.pid)}</div>
-                            </div>
+                            <PropTitle 
+                                title={prop.title}
+                                pid={prop.pid}
+                                creation={Number(prop.creationTime)}
+                                duration={Number(prop.duration)}/>
+                                
                             <div className='prop-body'>
                                 
                                 <div className='desc-wrap'>
@@ -82,14 +58,16 @@ const PropList = ({contract, currentOID, orgArray, userCredits }) => {
                                     voteDown={voteDown}
                                     setUpAmount={setUpAmount}
                                     setDownAmount={setDownAmount}
-                                    checkResults={checkResults}
                                     pid={prop.pid}
                                     upVotes={prop.upVotes}
                                     downVotes={prop.downVotes}         
                                     contract={contract}
                                     oid={currentOID}
                                     votesUp={votesUp}
-                                    votesDown={votesDown}/>
+                                    votesDown={votesDown}
+                                    creation={Number(prop.creationTime)}
+                                    duration={Number(prop.duration)}/>
+                                    
                                 <div className='prop-created'>Created by: {prop.creator}</div>
                                 
                                 <div className='time-wrap'>

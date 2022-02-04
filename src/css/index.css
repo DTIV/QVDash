@@ -13,9 +13,11 @@ a{
 
 :root{
   ---brad: 0.5em;
+  ---up-col: lime;
+  ---down-col: red;
   ---bg-col: #121212;
   ---bg-txt-col: #fff;
-  ---brdr-col: rgb(37, 37, 37);
+  ---brdr-col: #fff;
   ---el1-col: #1d1d1d;
   ---el2-col: #212121;
 }

@@ -32,9 +32,10 @@
 }
 
 .connect-btn{
+    color: var(---bg-txt-col);
     padding: 0.5rem;
     background: inherit;
-    border: black 1px solid;
+    border: var(---brdr-col) 1px solid;
     border-radius: var(---brad);
     cursor: pointer;
 }

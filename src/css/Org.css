@@ -48,7 +48,8 @@
 .user-stats{
     margin: 1rem 0;
     padding: 1rem;
-    border: black solid 1px;
+    border: var(---brdr-col) solid 1px;
+    background-color: var(---el1-col);
     border-radius: var(---brad);
 }
 .userstats-wrap{
