@@ -9,8 +9,7 @@ const PropList = ({contract, currentOID, orgArray, userCredits }) => {
     const [downAmount, setDownAmount] = useState(0);
     const [upAmount, setUpAmount] = useState(0);
     const [getResults, setResults] = useState(false)
-    const [votesUp, setVotesUp] = useState(0);
-    const [votesDown, setVotesDown] = useState(0);
+
 
     const voteUp = async (pId) => {
         console.log("voting up")
@@ -35,7 +34,6 @@ const PropList = ({contract, currentOID, orgArray, userCredits }) => {
     }
 
     if(orgArray){
-        
         return (
             <div className='proplist-wrap'>
                 {
@@ -44,6 +42,8 @@ const PropList = ({contract, currentOID, orgArray, userCredits }) => {
                             <PropTitle 
                                 title={prop.title}
                                 pid={prop.pid}
+                                oid={currentOID}
+                                contract={contract}
                                 creation={Number(prop.creationTime)}
                                 duration={Number(prop.duration)}/>
                                 
@@ -63,11 +63,8 @@ const PropList = ({contract, currentOID, orgArray, userCredits }) => {
                                     downVotes={prop.downVotes}         
                                     contract={contract}
                                     oid={currentOID}
-                                    votesUp={votesUp}
-                                    votesDown={votesDown}
                                     creation={Number(prop.creationTime)}
-                                    duration={Number(prop.duration)}/>
-                                    
+                                    duration={Number(prop.duration)}/>       
                                 <div className='prop-created'>Created by: {prop.creator}</div>
                                 
                                 <div className='time-wrap'>

@@ -6,10 +6,26 @@ import { BsArrowDownSquareFill,
 import { useEffect, useState } from 'react';
 
 const Voting = (props) => {
+    const [votesUp, setVotesUp] = useState(0);
+    const [votesDown, setVotesDown] = useState(0);
+
     const creation = props.creation
     const duration = props.duration
     const edate = creation + duration
     const cdate = Date.now()/1000
+
+    const checkVotes = async (currentOID, pid) => {
+        if(props.contract){
+            const contract = props.contract;
+            const votes = await contract.totalVotes(props.oid, props.pid)
+            setVotesUp(Number(votes[0]))
+            setVotesDown(Number(votes[0]))
+        }
+    }
+
+    useEffect(() => {
+        checkVotes(props.oid, props.pid)
+    }, [props.contract]);
 
     if(cdate > edate){
         return (
@@ -17,11 +33,11 @@ const Voting = (props) => {
                 <div className='sm-title'>Voting Has Ended.</div>
                 <div className='result-stats'>
                     <div className='up-wrap'>
-                        <div className='vote-count'>{props.votesUp}</div>
+                        <div className='vote-count'>{votesUp}</div>
                         <div>Up Votes</div>
                     </div>
                     <div className='down-wrap'>
-                        <div className='vote-count'>{props.votesDown}</div>
+                        <div className='vote-count'>{votesDown}</div>
                         <div>Down Votes</div>
                     </div>
                 </div>
