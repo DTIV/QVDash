@@ -6,7 +6,7 @@ import { Routes,Router, Route, Link } from "react-router-dom";
 import CreateOrg from "./components/Org/CreateOrg";
 import ContractAddress from './contractData/contracts-address.json'
 import ContractAbi from './contractData/abi.json'
-import { detectProvider } from './functions'
+// import { detectProvider } from './functions'
 import CreateProps from "./components/CreateProps";
 import OrgPage from "./components/Org/OrgPage";
 import OrgProfile from "./components/Org/OrgProfile";
@@ -36,6 +36,21 @@ function App() {
   const contract = ContractAddress.Token
   const abi = ContractAbi.abi
   
+  const detectProvider = () => {
+      // Get provider
+      let provider;
+      if(window.ethereum) {
+        provider = window.ethereum;
+      } else if (window.web3) {
+        provider = window.web3.currentProvider;
+      }else{
+        window.alert("No Ethereum browser detected")
+      }
+      return provider
+  }
+
+  
+  
 
   useEffect(()=> {
     // Set provider and check connection
@@ -44,6 +59,7 @@ function App() {
       setCurrentAccount("")
       setCurrentNetwork("")
     }
+
 
     const provider = detectProvider()
     setProvider(provider)
@@ -140,6 +156,7 @@ function App() {
     setError(false)
     setConnecting(false)
   }
+
   console.log(meta)
   return (
     <div className="App">

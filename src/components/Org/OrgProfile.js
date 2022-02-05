@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import PropStats from '../Proposals/PropStats';
 import PropList from '../Proposals/PropList';
 import Chart from '../Chart/Chart';
-
+import placeholder from '../../img/placeholder.png'
 const OrgProfile = (props) => {
     const [orgArray, setOrgArray] = useState("");
     const [contract, setContract] = useState("");
@@ -102,19 +102,35 @@ const OrgProfile = (props) => {
     const filterAll= () => {
         setOrgArray(allProps)
     }
-
+    console.log(orgData)
     return (
         <div>
             {
                 orgData ?
                 <div>
                     <div className='lrg-title'>
-                        {orgData.contract_name}
+                        { 
+                            orgData.contract_name ? 
+                            <div>{orgData.contract_name}</div>
+                            : 
+                            <div>{currentOrg.name}</div>
+                        }
+                    </div>
+                    <div className='org-logo-wrap'>
+                        <img src={orgData.logo_url} alt="" />
                     </div>
                     
-                    <img src={orgData.logo_url} alt="" />
                 </div>
-                :<></>
+                :
+                <div>
+                    <div className='lrg-title'>
+                        <div>{currentOrg.name}</div>
+                    </div>
+                    <div className='org-logo-wrap'>
+                        <img className='org-logo' src={placeholder} alt="" />
+                    </div>
+                    
+                </div>
             }
             
             <div className='mint-btn'>

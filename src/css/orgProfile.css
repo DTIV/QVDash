@@ -123,3 +123,13 @@
     font-size: 1rem;
     color: var(---bg-txt-col);
 }
+
+.org-logo-wrap{
+    display: flex;
+    justify-content: center;
+}
+
+.org-logo{
+    max-width: 300px;
+    max-height: 300px;
+}
