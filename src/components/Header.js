@@ -6,13 +6,25 @@ import { Chains, getContractMeta } from '../functions';
 
 const Header = (props) => {
     const [chains, setChains] = useState("");
+    const [active, setActive] = useState("")
 
     useEffect(() => {
         const elem = document.getElementById('network-select');
         elem.value = props.currentNetwork
         const chains = Chains(setChains)
     }, [props.currentNetwork])
+    
+    const checkActive = async (contract) => {
+        if(contract){
+            const tx = await contract.checkOrgActive()
+            setActive(tx)
+        }
+    }
 
+    useEffect(() => {
+        checkActive(props.contract)
+    }, [props.contract]);
+    
     return (
     <div className='navbar'>
         <div>
@@ -22,7 +34,7 @@ const Header = (props) => {
         </div>
         <div className='menu'>
             {
-                props.orgActive ?
+                active ?
                 <Link to="/create/proposal">
                     Create
                 </Link>

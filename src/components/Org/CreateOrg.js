@@ -1,8 +1,8 @@
 import React from 'react';
 import { ethers } from "ethers";
-import { detectProvider } from '../functions';
+import { detectProvider } from '../../functions';
 import { useState, useEffect } from 'react';
-import Error from './Error';
+import Error from '../Error';
 
 
 const CreateOrg = (props) => {
@@ -24,6 +24,7 @@ const CreateOrg = (props) => {
         const Contract = new ethers.Contract(contractAddress, abi, signer)
         const org = (await Contract.createNewOrganization(orgName, getCPV, orgAddress)).toString()
         setOrg(org)
+        window.location.href = '/'
     }
 
     return (

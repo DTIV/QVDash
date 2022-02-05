@@ -11,6 +11,7 @@ const OrgPage = (props) => {
         setOrgArray(orgs)
         return orgs
     }
+
     
     useEffect(() => {
         const QVContract = props.contract;
@@ -19,6 +20,7 @@ const OrgPage = (props) => {
         }
     }, [props.contract]);
 
+    
     return (
         <div>
             <div className='lrg-title'>ORGANIZATIONS</div>
@@ -41,7 +43,9 @@ const OrgPage = (props) => {
                                     <OrgCard 
                                         oid={org.oid}
                                         name={org.name}
-                                        ProposalCount={org.ProposalCount} />
+                                        ProposalCount={org.ProposalCount} 
+                                        meta={props.meta}
+                                        contract={props.contract}/>
                                 </div>
                                 
                             ))
@@ -49,6 +53,13 @@ const OrgPage = (props) => {
                     </div>
                     : 
                     <div className='orglist-loading'>Loading...</div>
+                }
+            </div>
+            <div>
+                {
+                    orgArray.length === 0 ?
+                    <div> No Organizations Yet.</div>
+                    : <></>
                 }
             </div>
         </div>

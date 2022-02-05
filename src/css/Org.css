@@ -62,5 +62,15 @@
 
 .chart{
     width: 100%;
-    height: 500px;
+    height: 500px;    
+}
+
+.logo-thumb{
+    width: 100px;
+    height: 100px;
+}
+
+.thumb-wrap{
+    display: flex;
+    justify-content: center;
 }

@@ -3,13 +3,13 @@ import { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import Header from "./components/Header";
 import { Routes,Router, Route, Link } from "react-router-dom";
-import CreateOrg from "./components/CreateOrg";
+import CreateOrg from "./components/Org/CreateOrg";
 import ContractAddress from './contractData/contracts-address.json'
 import ContractAbi from './contractData/abi.json'
 import { detectProvider } from './functions'
 import CreateProps from "./components/CreateProps";
-import OrgPage from "./components/OrgPage";
-import OrgProfile from "./components/OrgProfile";
+import OrgPage from "./components/Org/OrgPage";
+import OrgProfile from "./components/Org/OrgProfile";
 import { getContractMeta } from './functions';
 
 /*
@@ -140,7 +140,7 @@ function App() {
     setError(false)
     setConnecting(false)
   }
-
+  console.log(meta)
   return (
     <div className="App">
       <Header 
@@ -152,7 +152,8 @@ function App() {
       balance={getEtherBal}
       detect={detectProvider}
       closeError={closeError}
-      orgActive={orgActive}/>
+      orgActive={orgActive}
+      contract={getContract}/>
       <div className="inner-body">
         <Routes >
           <Route exact path="/create/proposal" element={
@@ -176,7 +177,8 @@ function App() {
             <OrgPage 
               contract={getContract}
               orgActive={orgActive}
-              currentNetwork={getCurrentNetwork}/>
+              currentNetwork={getCurrentNetwork}
+              meta={meta}/>
           }/>
           <Route exact path="/org/:id" element={
             <OrgProfile 

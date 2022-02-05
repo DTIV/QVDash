@@ -1,9 +1,9 @@
 import React from 'react';
 import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import PropStats from './Proposals/PropStats';
-import PropList from './Proposals/PropList';
-import Chart from './Chart/Chart';
+import PropStats from '../Proposals/PropStats';
+import PropList from '../Proposals/PropList';
+import Chart from '../Chart/Chart';
 
 const OrgProfile = (props) => {
     const [orgArray, setOrgArray] = useState("");
@@ -41,11 +41,10 @@ const OrgProfile = (props) => {
 
     useEffect(() => {
         getCurrentOrgData(meta, currentOrg)
-    }, [, currentOrg]);
+    }, [meta, currentOrg]);
     
     const mint = async () => {
         if(contract){
-            console.log("minting tokens")
             const mint = contract.mint(currentOID);
         }
     }
