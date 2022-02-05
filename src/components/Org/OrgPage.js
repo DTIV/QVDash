@@ -44,7 +44,7 @@ const OrgPage = (props) => {
                                         oid={org.oid}
                                         name={org.name}
                                         ProposalCount={org.ProposalCount} 
-                                        meta={props.meta}
+                                        // meta={props.meta}
                                         contract={props.contract}/>
                                 </div>
                                 

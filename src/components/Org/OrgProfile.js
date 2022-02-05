@@ -5,6 +5,8 @@ import PropStats from '../Proposals/PropStats';
 import PropList from '../Proposals/PropList';
 import Chart from '../Chart/Chart';
 import placeholder from '../../img/placeholder.png'
+import { getContractData } from '../../functions';
+
 const OrgProfile = (props) => {
     const [orgArray, setOrgArray] = useState("");
     const [contract, setContract] = useState("");
@@ -19,8 +21,8 @@ const OrgProfile = (props) => {
     const path = window.location.pathname
     const currentOID = Number(path.replace("/org/", ""))
     const QVContract = props.contract;
-    const mounted = useRef(false)
-    const meta = props.meta
+    // const mounted = useRef(false)
+    // const meta = props.meta
     
     const getProps = async (QVContract) => {
         const propz = await QVContract.getOrgProposals(currentOID);
@@ -40,8 +42,10 @@ const OrgProfile = (props) => {
     }, [QVContract]);
 
     useEffect(() => {
-        getCurrentOrgData(meta, currentOrg)
-    }, [meta, currentOrg]);
+        // console.log(currentOrg.contractAddress)
+        getContractData(currentOrg.contractAddress,setOrgData)
+        // getCurrentOrgData(meta, currentOrg)
+    }, [currentOrg]);
     
     const mint = async () => {
         if(contract){
@@ -102,7 +106,7 @@ const OrgProfile = (props) => {
     const filterAll= () => {
         setOrgArray(allProps)
     }
-    console.log(orgData)
+    // console.log(orgData)
     return (
         <div>
             {
@@ -115,6 +119,9 @@ const OrgProfile = (props) => {
                             : 
                             <div>{currentOrg.name}</div>
                         }
+                    </div>
+                    <div>
+                        Contract: {orgData.contract_address}
                     </div>
                     <div className='org-logo-wrap'>
                         <img src={orgData.logo_url} alt="" />
@@ -164,7 +171,7 @@ const OrgProfile = (props) => {
                     currentOID={currentOID}
                     orgArray={orgArray}
                     userCredits={Number(userCreditBal)}
-                    meta={meta}/>
+                    />
             </div>
         </div>
     );

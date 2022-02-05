@@ -10,7 +10,7 @@ import ContractAbi from './contractData/abi.json'
 import CreateProps from "./components/CreateProps";
 import OrgPage from "./components/Org/OrgPage";
 import OrgProfile from "./components/Org/OrgProfile";
-import { getContractMeta } from './functions';
+import { getChainContractMeta } from './functions';
 
 /*
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
@@ -99,7 +99,7 @@ function App() {
   }, [connected, getProvider])
   
   useEffect(() => {
-    getContractMeta(137, setMeta)
+    getChainContractMeta(137, setMeta)
   }, [getCurrentNetwork])
 
   const Connect = async () => {
@@ -157,7 +157,7 @@ function App() {
     setConnecting(false)
   }
 
-  console.log(meta)
+  // console.log(meta)
   return (
     <div className="App">
       <Header 
@@ -195,13 +195,15 @@ function App() {
               contract={getContract}
               orgActive={orgActive}
               currentNetwork={getCurrentNetwork}
-              meta={meta}/>
+              // meta={meta}
+              />
           }/>
           <Route exact path="/org/:id" element={
             <OrgProfile 
               contract={getContract}
               orgActive={orgActive}
-              meta={meta}/>
+              // meta={meta}
+              />
           }/>
         </Routes>
       </div>

@@ -6,6 +6,7 @@ import PropTime from './PropTime';
 import PropTitle from './PropTitle';
 
 const PropList = ({contract, currentOID, orgArray, userCredits }) => {
+    
     const [downAmount, setDownAmount] = useState(0);
     const [upAmount, setUpAmount] = useState(0);
     const [getResults, setResults] = useState(false)
