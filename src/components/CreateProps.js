@@ -5,9 +5,9 @@ import { useState } from 'react';
 import Error from './Error';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser'
 
 const CreateProps = (props) => {
+    
     const abi = props.abi
     const contractAddress = props.contract
 
@@ -31,6 +31,7 @@ const CreateProps = (props) => {
         const data = editor.getData();
         setBlog(data)
     }
+
     return (
         <div className='create-org'>
             <div className='org-card'>
@@ -74,7 +75,6 @@ const CreateProps = (props) => {
                                     onChange = {handleOnChange}
                                 />
                             </div>
-                            
                             {
                                 (propTitle.length >= 10) ?
                                 <div>

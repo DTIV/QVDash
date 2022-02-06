@@ -75,3 +75,27 @@
     justify-content: center;
 }
 
+@media screen and (max-width: 1400px) {
+    .orglist-wrap{
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 1rem;
+  }
+}
+
+@media screen and (max-width: 730px) {
+  .orglist-wrap{
+      border: orange solid 1px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1rem;
+}
+}
+
+@media screen and (max-width: 400px) {
+  .orglist-wrap{
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 1rem;
+}
+}

@@ -3,23 +3,17 @@ import { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import Header from "./components/Header";
 import { Routes,Router, Route, Link } from "react-router-dom";
-import CreateOrg from "./components/Org/CreateOrg";
+
 import ContractAddress from './contractData/contracts-address.json'
 import ContractAbi from './contractData/abi.json'
 // import { detectProvider } from './functions'
 import CreateProps from "./components/CreateProps";
-import OrgPage from "./components/Org/OrgPage";
+import CreateOrg from "./components/Org/CreateOrg";
 import OrgProfile from "./components/Org/OrgProfile";
+import OrgPage from "./components/Org/OrgPage";
+
 import { getChainContractMeta } from './functions';
 
-/*
-import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
-
-WHEN THE DESCRIPTION IS RETURNED FROM THE CONTRACT - THE HTML STRING WILL NEED TO
-
-var txt = ReactHtmlParser(vuilder.blog)
-
-*/
 
 function App() {
   const [connected, setConnected] = useState(false);
@@ -180,7 +174,7 @@ function App() {
               abi={abi}
               contract={contract}/>
           }/>
-
+         
           <Route exact path="/create/org" element={ 
             <CreateOrg 
               connected={connected} 
@@ -188,14 +182,13 @@ function App() {
               abi={abi}
               contract={contract}
               currentNetwork={getCurrentNetwork}/>
-          }/>
+          }/> 
 
           <Route exact path="/" element={
             <OrgPage 
               contract={getContract}
               orgActive={orgActive}
               currentNetwork={getCurrentNetwork}
-              // meta={meta}
               />
           }/>
           <Route exact path="/org/:id" element={
@@ -203,7 +196,6 @@ function App() {
               contract={getContract}
               orgActive={orgActive}
               account={getCurrentAccount}
-              // meta={meta}
               />
           }/>
         </Routes>
