@@ -43,7 +43,7 @@ const Header = (props) => {
                     Create
                 </Link>
             }
-            <a href="https://github.com/DTIV/QVDash" target="_blank">Docs</a>
+            <a href="https://dan-troyer.gitbook.io/qvdash/" target="_blank">Docs</a>
         </div>
         <div className='sidenav-netwrap'>
             <div className='account-menu-txt'>
