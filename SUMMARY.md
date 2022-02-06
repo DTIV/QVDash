@@ -1,10 +1,10 @@
 # Table of contents
 
-* [Get Started](README.md)
+* [QVDash](README.md)
 
-## QVDash
+## About
 
-* [Quadratic Voting](qvdash/overview.md)
-* [Smart Contract](qvdash/smart-contract.md)
-* [Contract Interaction](qvdash/contract-interaction.md)
-* [Covalent API](qvdash/covalent-api.md)
+* [Quadratic Voting](about/overview.md)
+* [Smart Contract](about/smart-contract.md)
+* [Contract Interaction](about/contract-interaction.md)
+* [Covalent API](about/covalent-api.md)
