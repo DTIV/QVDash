@@ -114,15 +114,9 @@ export const getLogEvents = async (chainId, contract) => {
   }
 }
 
-
-
-
-
 export const supportedDex = async () => {
   const url = `https://api.covalenthq.com/v1/xy=k/supported_dexes/?key=${process.env.REACT_APP_COVKEY}`
   const response = await fetch(url);
   const data = await response.json()
   return data.data.items
 }
-
-getHistorical("0x2bf91c18cd4ae9c2f2858ef9fe518180f7b5096d")
