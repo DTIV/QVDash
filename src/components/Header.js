@@ -42,7 +42,8 @@ const Header = (props) => {
                 <Link to="/create/org">
                     Create
                 </Link>
-            } 
+            }
+            <a href="https://github.com/DTIV/QVDash" target="_blank">Docs</a>
         </div>
         <div className='sidenav-netwrap'>
             <div className='account-menu-txt'>
