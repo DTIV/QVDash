@@ -53,27 +53,76 @@ export const getFullContractMeta = () => {
   }
 }
 
-export const getContractData = async (contract, setContractMeta) => {
-  const chains = [137, 56, 43114]
-  const temp = []
-  for(let i=0; i<chains.length; i++){
-    const chainId = chains[i]
-    const url = `https://api.covalenthq.com/v1/${chainId}/tokens/tokenlists/all/?key=${process.env.REACT_APP_COVKEY}`
+export const getHistorical = async (chainId, contract) => {
+  if(contract){
+    const url = `https://api.covalenthq.com/v1/pricing/historical_by_addresses_v2/${chainId}/usd/${contract}/?key=${process.env.REACT_APP_COVKEY}`
     const response = await fetch(url);
     const data = await response.json()
-    const meta = data.data.items
-    if(contract){
-      const addy = contract.toLowerCase()
-      const matcher = meta.filter((proposal) => (proposal.contract_address == addy))
-      if(matcher.length > 0){
-        if(setContractMeta){
-          setContractMeta(matcher[0])
-          return matcher
-        }
+    if(data.data){
+      return data.data[0]
+    }
+  }
+}
+
+export const getTokenHolders = async (chainId, contract) => {
+  // const latestBlock = await getLatestBlock(chainId)
+  const url = `https://api.covalenthq.com/v1/${chainId}/tokens/${contract}/token_holders/?key=${process.env.REACT_APP_COVKEY}`
+  const response = await fetch(url);
+  const data = await response.json()
+  return data.data.items
+}
+
+export const getTransactions = async (chainId, contract) => {
+  const url = `https://api.covalenthq.com/v1/${chainId}/address/${contract}/transactions_v2/?key=${process.env.REACT_APP_COVKEY}`
+  const response = await fetch(url);
+  const data = await response.json()
+  return data.data
+}
+
+export const getContractData = async (contract, setContractMeta) => {
+  const chains = [137, 56, 43114, 1]
+  const dexs = await supportedDex()
+  for(let i=0; i<chains.length; i++){
+    const data = await getHistorical(chains[i],contract)
+    if(data && data.contract_decimals){
+      if(data.prices){
+        const dataframe = data.prices[0]
+        dataframe['chain'] = chains[i]
+        console.log(dataframe)
+        setContractMeta(dataframe)
+        return dataframe
       }
     }
   }
 }
 
-getContractData("0x9e70e94fcd61373445ff8ea840783e02a852a8b6")
-// getFullContractMeta()
+export const getLatestBlock = async (chainId) => {
+  const blockUrl = `https://api.covalenthq.com/v1/${chainId}/block_v2/latest/?key=${process.env.REACT_APP_COVKEY}`
+  const blockRes = await fetch(blockUrl);
+  const blockData = await blockRes.json()
+  const latestBlock = blockData.data.items[0].height
+  return latestBlock
+}
+
+export const getLogEvents = async (chainId, contract) => {
+  const latestBlock = await getLatestBlock(chainId)
+  if(latestBlock){
+    const url = `https://api.covalenthq.com/v1/${chainId}/events/address/${contract}/?starting-block=${latestBlock-1000}&ending-block=${latestBlock}&key=${process.env.REACT_APP_COVKEY}`
+    const response = await fetch(url);
+    const data = await response.json()
+    return data.data.items
+  }
+}
+
+
+
+
+
+export const supportedDex = async () => {
+  const url = `https://api.covalenthq.com/v1/xy=k/supported_dexes/?key=${process.env.REACT_APP_COVKEY}`
+  const response = await fetch(url);
+  const data = await response.json()
+  return data.data.items
+}
+
+getHistorical("0x2bf91c18cd4ae9c2f2858ef9fe518180f7b5096d")

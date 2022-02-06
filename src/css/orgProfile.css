@@ -133,3 +133,8 @@
     max-width: 300px;
     max-height: 300px;
 }
+
+.contract-info{
+    text-align: center;
+    margin: 2rem 0;
+}

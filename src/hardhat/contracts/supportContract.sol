@@ -45,8 +45,8 @@ contract supportContract{
     event newOrganizationCreated(
         string name,
         address creator,
-        uint organizationCount,
-        uint ownerind,
+        address contractAddress,
+        uint organizationID,
         uint creditsPerVoter
     );
 

@@ -73,7 +73,7 @@ contract QVote is supportContract{
             creditsPerVoter : _cpv,
             totalTokenSupply : 0
         }));
-        
+        emit newOrganizationCreated(_name, msg.sender, account, organizationCount, _cpv);
     }
 
     /* ############################# Proposal part starts here  ############################################## */  
@@ -98,7 +98,7 @@ contract QVote is supportContract{
         proposalList[_orgID].push(newProp);
         allProposals.push(newProp);
         
-        // emit newProposalCreated(_orgID,_title, _pID,msg.sender,_duration, _desc);
+        emit newProposalCreated(_orgID,_title, _pID,msg.sender,_duration, _desc);
     }
 
     //checks proposal duration
@@ -282,7 +282,15 @@ contract QVote is supportContract{
         return OrgUsers[_orgID].length;
     }
 
-
+    function makeOrgInactive(uint _orgID) external{
+        require(msg.sender==owner, "not allowed");
+        Organization storage _org = organizations[_orgID-1];
+        address prevOwner = _org.creator;
+        OrganizationOwners[prevOwner] = 0;
+        address account = _org.contractAddress;
+        OrganizationContracts[account]= false;
+        _org.isActive = false;
+    }
     //helper function to create organization when theres already existing data 
     // function createNewOrganizationhelper(string memory _name, uint256 _cpv, address account)external{
     //     require( organizations.length==0 || organizations[OrganizationOwners[account]-1].isActive==false,"An organization with this address already exists!");
@@ -298,6 +306,6 @@ contract QVote is supportContract{
     //         totalTokenSupply : 0
     //     }));
     //     organizationCount++;
-       
+        // emit newOrganizationCreated(_name,msg.sender, account, organizationCount, _cpv);
     // }
 }

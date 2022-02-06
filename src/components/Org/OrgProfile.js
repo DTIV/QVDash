@@ -106,7 +106,7 @@ const OrgProfile = (props) => {
     const filterAll= () => {
         setOrgArray(allProps)
     }
-    // console.log(orgData)
+
     return (
         <div>
             {
@@ -114,19 +114,26 @@ const OrgProfile = (props) => {
                 <div>
                     <div className='lrg-title'>
                         { 
-                            orgData.contract_name ? 
-                            <div>{orgData.contract_name}</div>
+                            orgData.contract_metadata.contract_name ? 
+                            <div>{orgData.contract_metadata.contract_name} </div>
                             : 
                             <div>{currentOrg.name}</div>
                         }
                     </div>
-                    <div>
-                        Contract: {orgData.contract_address}
+                    <div className='med-title'>
+                        ({orgData.contract_metadata.contract_ticker_symbol})
                     </div>
                     <div className='org-logo-wrap'>
-                        <img src={orgData.logo_url} alt="" />
+                        <img src={orgData.contract_metadata.logo_url} alt="" />
                     </div>
-                    
+                    <div className='contract-info'>
+                        <div>
+                            Contract: {orgData.contract_metadata.contract_address}
+                        </div>
+                    </div>
+                    <div>
+                        {orgData.price} USD
+                    </div>
                 </div>
                 :
                 <div>
@@ -144,7 +151,7 @@ const OrgProfile = (props) => {
                 <button className='a-btn' onClick={mint}>Get Credits</button>
             </div>
             <div>
-                <div className='lrg-title'>Proposals</div>
+                
                 <div>
                     <PropStats 
                         userCredits={Number(userCreditBal)}
@@ -155,6 +162,7 @@ const OrgProfile = (props) => {
                     <Chart 
                         allProps={allProps}/>
                 </div>
+                <div className='lrg-title'>Proposals</div>
                 <div className='filter-wrap'>
                     <div className='filterbtn-wrap'>
                         <button className='filter-btn' onClick={filterAll}>All</button>

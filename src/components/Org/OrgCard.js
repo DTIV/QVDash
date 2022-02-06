@@ -30,7 +30,7 @@ const OrgCard = (props) => {
             <div className='otop-wrap'>
                 {
                     orgData ?
-                        <div className='org-name'>{orgData.contract_name}</div>
+                        <div className='org-name'>{orgData.contract_metadata.contract_name}</div>
                     :
                     <div className='org-name'>{props.name}</div>
                 }
@@ -39,7 +39,7 @@ const OrgCard = (props) => {
             {
                 orgData ?
                 <div className='thumb-wrap'>
-                    <img className='logo-thumb' src={orgData.logo_url} alt="" />
+                    <img className='logo-thumb' src={orgData.contract_metadata.logo_url} alt="" />
                 </div>
                 : 
                 <div className='thumb-wrap'>
