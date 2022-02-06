@@ -202,6 +202,7 @@ function App() {
             <OrgProfile 
               contract={getContract}
               orgActive={orgActive}
+              account={getCurrentAccount}
               // meta={meta}
               />
           }/>
