@@ -1,83 +1,40 @@
 ---
-description: A Overview of QVDash Application.
+description: Limitations of Quadratic Voting.
 ---
 
-# Overview
+# Quadratic Voting
 
-This react application is our submission for Gitcoin's : [Schelling Point Virtual Hackathon](https://gitcoin.co/hackathon/schellingpoint)
+{% hint style="info" %}
+Despite being a very efficient, effective, and robust way of voting, Quadratic voting still has some drawbacks when it comes to real-life implementation which makes it vulnerable to cheating and collusion.
+{% endhint %}
 
-&#x20;[**Quadratic Voting Platform Bounty**](https://gitcoin.co/issue/covalenthq/covalent-gitcoin-bounties/13/100027480)
+### Wealth
 
-QVDash is a multi-chain, quadratic voting platform, Currently deployed on the Rinkeby Testnet, users can vote quadratically on various organization's proposals. Organizations are created by entering the protocol contract address, a name for the protocol (if a contract has no name) and the amount of credits per voter. CPV can be changed in the future.&#x20;
+Wealthy people can afford to buy more votes relative to the rest of the population which could distort the voting outcomes to favor the rich people. This effect is dampened a bit by the fact that it is quadratic voting and the amount of money increases quadratically as we keep buying votes. For example, someone with 16 times more wealth will only have 4 times more effect on the outcome of a certain voting event. Someone with 100 times more wealth will only have 10 times more influence on the outcome, not 100 times, reducing the influence by 90% and this percentage keeps getting better for larger values. This can be further improved by introducing artificial currency which is distributed on a uniform basis, thus giving every individual an equal say, but allowing individuals to more flexibly align their voting behavior with their preferences.
 
-We have added several organizations for hackathon display purposes, and organization ownership can be transferred to rightful contract owners. This application utilizes the covalent API to access network and contract data for different organizations on multiple different networks.
+### Fake Identity (Sybil attacks)
 
-### Getting Started
+Quadratic voting requires a way such that individuals cannot create multiple identities and exploit the quadratic voting by repeatedly paying for a single vote and influencing the decision. This will make the quadratic voting mechanism fail and become linear voting.
 
-* Clone Repository
-* Install Packages
+### Collusion
 
-```
-npm install
-```
+The quadratic voting mechanism fails again and falls into the linear voting situation if we cant prevent people from selling their votes. We have technologies like cryptography, encryption, zero-proof knowledge being tested which may be helpful in dealing with this issue.
 
-```
-yarn install
-```
+Follow our handy guides to get started on the basics as quickly as possible:
 
-* Create A Covalent API Key
+{% embed url="https://www.youtube.com/watch?v=_xRbnobzs2Y" %}
 
-{% embed url="https://www.covalenthq.com/platform#/apikey/" %}
+{% content-ref url="qvdash/smart-contract.md" %}
+[smart-contract.md](qvdash/smart-contract.md)
+{% endcontent-ref %}
 
-* Create .env file with the .sample\_env file profided
-* Add the covalent API key
+{% content-ref url="qvdash/contract-interaction.md" %}
+[contract-interaction.md](qvdash/contract-interaction.md)
+{% endcontent-ref %}
 
-```
-REACT_APP_COVKEY = "ckey_"
-```
+{% content-ref url="qvdash/covalent-api.md" %}
+[covalent-api.md](qvdash/covalent-api.md)
+{% endcontent-ref %}
 
-* Start the application
 
-```
-npm start
-```
 
-```
-yarn start
-```
-
-### Deploying
-
-This application can be deployed on multiple chains, the frontend will recognize which network the user is connected to and will select the correct network accordingly based on the supported networks provided by the Covalent API + Rinkeby Testnet, Currently there is no script to sort and change contract data on network changes, so QVDash will only work on a single deployed network, currently Rinkeby. To deploy on another network follow these steps.
-
-* Delete contractData Folder in /src/ directory
-* Delete absract and cache in /src/hardhat directory
-* Create Alchemy or Infura API Key
-
-{% embed url="https://www.alchemy.com" %}
-
-{% embed url="https://infura.io" %}
-
-* Add Alchemy or Infura API Key and a private key to .env file
-
-```
-REACT_APP_ALCHEMY_KOVAN = "ALCHEMY_URL"
-REACT_APP_PRIVATE_KEY = "PK"
-```
-
-* Add new network to hardhat.config in project folder
-
-```
-networks:{
-    kovan:{
-      url: process.env.REACT_APP_ALCHEMY_KOVAN,
-      accounts:[process.env.REACT_APP_PRIVATE_KEY]
-    }
-  },
-```
-
-* Deploy to network
-
-```
-npx hardhat run src/hardhat/scripts/deploy.js --network kovan
-```
