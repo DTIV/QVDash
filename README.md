@@ -1,7 +1,7 @@
 ---
 description: Limitations of Quadratic Voting.
 ---
-
+fdfdf
 # Quadratic Voting
 
 {% hint style="info" %}
