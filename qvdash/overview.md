@@ -24,17 +24,6 @@ Follow our handy guides to get started on the basics as quickly as possible:
 
 {% embed url="https://www.youtube.com/watch?v=_xRbnobzs2Y" %}
 
-{% content-ref url="qvdash/smart-contract.md" %}
-[smart-contract.md](qvdash/smart-contract.md)
+{% content-ref url="covalent-api.md" %}
+[covalent-api.md](covalent-api.md)
 {% endcontent-ref %}
-
-{% content-ref url="qvdash/contract-interaction.md" %}
-[contract-interaction.md](qvdash/contract-interaction.md)
-{% endcontent-ref %}
-
-{% content-ref url="qvdash/covalent-api.md" %}
-[covalent-api.md](qvdash/covalent-api.md)
-{% endcontent-ref %}
-
-
-
