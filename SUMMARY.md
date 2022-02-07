@@ -4,7 +4,8 @@
 
 ## About
 
-* [Quadratic Voting](about/overview.md)
+* [Quadratic Voting](about/quadratic-voting.md)
+* [Limitations](about/overview.md)
 * [Smart Contract](about/smart-contract.md)
 * [Contract Interaction](about/contract-interaction.md)
 * [Covalent API](about/covalent-api.md)

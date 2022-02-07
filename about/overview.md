@@ -2,7 +2,7 @@
 description: Limitations of Quadratic Voting.
 ---
 
-# Quadratic Voting
+# Limitations
 
 {% hint style="info" %}
 Despite being a very efficient, effective, and robust way of voting, Quadratic voting still has some drawbacks when it comes to real-life implementation which makes it vulnerable to cheating and collusion.
@@ -21,8 +21,6 @@ Quadratic voting requires a way such that individuals cannot create multiple ide
 The quadratic voting mechanism fails again and falls into the linear voting situation if we cant prevent people from selling their votes. We have technologies like cryptography, encryption, zero-proof knowledge being tested which may be helpful in dealing with this issue.
 
 Follow our handy guides to get started on the basics as quickly as possible:
-
-{% embed url="https://www.youtube.com/watch?v=_xRbnobzs2Y" %}
 
 {% content-ref url="covalent-api.md" %}
 [covalent-api.md](covalent-api.md)
