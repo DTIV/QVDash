@@ -2,11 +2,15 @@
 description: A Overview of QVDash Application.
 ---
 
-# Overview
+# QVDash
 
 This react application is our submission for Gitcoin's : [Schelling Point Virtual Hackathon](https://gitcoin.co/hackathon/schellingpoint)
 
 &#x20;[**Quadratic Voting Platform Bounty**](https://gitcoin.co/issue/covalenthq/covalent-gitcoin-bounties/13/100027480)
+
+#### View Live Site:
+
+{% embed url="https://amazing-keller-2bf46c.netlify.app" %}
 
 QVDash is a multi-chain, quadratic voting platform, Currently deployed on the Rinkeby Testnet, users can vote quadratically on various organization's proposals. Organizations are created by entering the protocol contract address, a name for the protocol (if a contract has no name) and the amount of credits per voter. CPV can be changed in the future.&#x20;
 
