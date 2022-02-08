@@ -58,9 +58,7 @@ export const getHistorical = async (chainId, contract) => {
     const url = `https://api.covalenthq.com/v1/pricing/historical_by_addresses_v2/${chainId}/usd/${contract}/?key=${process.env.REACT_APP_COVKEY}`
     const response = await fetch(url);
     const data = await response.json()
-    
     if(data.data){
-      console.log(data.data)
       return data.data.prices[0]
     }
   }
@@ -86,12 +84,10 @@ export const getContractData = async (contract, setContractMeta) => {
   const dexs = await supportedDex()
   for(let i=0; i<chains.length; i++){
     const data = await getHistorical(chains[i],contract)
-    console.log(data)
     if(data && data.contract_decimals){
       if(data.prices){
         const dataframe = data.prices[0]
         dataframe['chain'] = chains[i]
-        console.log(dataframe)
         setContractMeta(dataframe)
         return dataframe
       }

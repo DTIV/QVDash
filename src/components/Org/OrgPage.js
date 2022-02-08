@@ -5,10 +5,14 @@ import OrgCard from './OrgCard';
 
 const OrgPage = (props) => {
     const [orgArray, setOrgArray] = useState("");
+    const [search, setSearch] = useState("");
+    const [searchResults, setResults] = useState("");
+    const [allOrgs, setAllOrgs] = useState("")
 
     const getOrgs = async (QVContract) => {
         const orgs = await QVContract.getAllOrganization();
         setOrgArray(orgs)
+        setAllOrgs(orgs)
         return orgs
     }
 
@@ -20,18 +24,23 @@ const OrgPage = (props) => {
         }
     }, [props.contract]);
 
+    const searchFilter = (e) => {
+        const keyword = e.target.value
+        if(keyword){
+            const results = orgArray.filter((org) => {
+                return org.name.toLowerCase().startsWith(keyword.toLowerCase())
+            })
+            setOrgArray(results)
+        }else{
+            setOrgArray(allOrgs)
+        }
+    }
     
     return (
         <div>
             <div className='lrg-title'>ORGANIZATIONS</div>
             <div className='orgbtn-wrap'>
-                {
-                    props.orgActive ?
-                    <div>
-                        <Link to className='a-btn'>Your Organization</Link>
-                    </div>
-                    :<></>
-                }
+                <input className='search-input' type="text" placeholder='Search Organization' onChange={searchFilter}/>
             </div>
             <div className='org-wrap'>
                 {

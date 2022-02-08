@@ -16,14 +16,12 @@ const OrgProfile = (props) => {
     const [currentOrg, setCurrentOrg] = useState("")
     const [orgData, setOrgData] = useState("");
     const [allProps, setAllProps] = useState("");
-
+    const [mintAllow, setMintAllow] = useState(true)
 
     const path = window.location.pathname
     const currentOID = Number(path.replace("/org/", ""))
     const QVContract = props.contract;
-    // const mounted = useRef(false)
-    // const meta = props.meta
-    
+
     const getProps = async (QVContract) => {
         const propz = await QVContract.getOrgProposals(currentOID);
         setOrgArray(propz)
@@ -42,9 +40,7 @@ const OrgProfile = (props) => {
     }, [QVContract]);
 
     useEffect(() => {
-        // console.log(currentOrg.contractAddress)
         getContractData(currentOrg.contractAddress,setOrgData)
-        // getCurrentOrgData(meta, currentOrg)
     }, [currentOrg]);
     
     const mint = async () => {
@@ -106,7 +102,21 @@ const OrgProfile = (props) => {
     const filterAll= () => {
         setOrgArray(allProps)
     }
-    console.log(orgData)
+
+    const allowMint = async () => {
+        if(QVContract){
+            await QVContract.allowMinting(currentOID);
+            setMintAllow(true)
+        }
+    }
+
+    const blockMint = async () => {
+        if(QVContract){
+            await QVContract.blockMinting(currentOID);
+            setMintAllow(false)
+        }
+    }
+
     return (
         <div>
             {
@@ -153,8 +163,12 @@ const OrgProfile = (props) => {
                 </div>
                 : orgArray ?
                     <div className='control-btn'>
-                        <button className='a-btn'>Stop Minting</button>
-                        <button className='a-btn'>Reset Minting</button>
+                        {
+                            mintAllow ?
+                            <button className='a-btn' onClick={blockMint}>Stop Minting</button>
+                            :
+                            <button className='a-btn' onClick={allowMint}>Reset Minting</button>
+                        }
                     </div>
                     :<></>
             }
