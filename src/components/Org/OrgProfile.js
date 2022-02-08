@@ -106,7 +106,7 @@ const OrgProfile = (props) => {
     const filterAll= () => {
         setOrgArray(allProps)
     }
-    console.log()
+    console.log(orgData)
     return (
         <div>
             {
@@ -153,8 +153,8 @@ const OrgProfile = (props) => {
                 </div>
                 : orgArray ?
                     <div className='control-btn'>
-                        <button className='a-btn'>Stop Voting</button>
-                        <button className='a-btn'>Reset Voting</button>
+                        <button className='a-btn'>Stop Minting</button>
+                        <button className='a-btn'>Reset Minting</button>
                     </div>
                     :<></>
             }

@@ -52,7 +52,7 @@ const OrgPage = (props) => {
                         }
                     </div>
                     : 
-                    <div className='orglist-loading'>Loading...</div>
+                    <div className='orglist-loading'>Connect Wallet To View Organizations.</div>
                 }
             </div>
             <div>

@@ -1,5 +1,5 @@
 @import url('http://fonts.cdnfonts.com/css/print-clearly');
-
+@import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Roboto:wght@300&display=swap');
 *{
   margin: 0;
   padding: 0;
@@ -23,7 +23,7 @@ a{
 }
 
 body{
-  font-family: 'Print Clearly', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 1.3rem;
   background-color: var(---bg-col);
   color: var(---bg-txt-col);
