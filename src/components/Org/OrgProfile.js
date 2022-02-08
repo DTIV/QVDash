@@ -141,7 +141,7 @@ const OrgProfile = (props) => {
                             Contract: {orgData.contract_metadata.contract_address}
                         </div>
                     </div>
-                    <div>
+                    <div className='org-price'>
                         {orgData.price} USD
                     </div>
                 </div>
@@ -202,6 +202,8 @@ const OrgProfile = (props) => {
                     currentOID={currentOID}
                     orgArray={orgArray}
                     userCredits={Number(userCreditBal)}
+                    creator={currentOrg.creator}
+                    account={props.account}
                     />
             </div>
         </div>

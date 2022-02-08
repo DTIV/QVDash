@@ -5,7 +5,7 @@ import Voting from '../Voting';
 import PropTime from './PropTime';
 import PropTitle from './PropTitle';
 
-const PropList = ({contract, currentOID, orgArray, userCredits }) => {
+const PropList = ({contract, currentOID, orgArray, userCredits, creator, account }) => {
     
     const [downAmount, setDownAmount] = useState(0);
     const [upAmount, setUpAmount] = useState(0);
@@ -34,7 +34,7 @@ const PropList = ({contract, currentOID, orgArray, userCredits }) => {
         setResults(tx)
     }
 
-    if(orgArray){
+    if(orgArray.length != 0){
         return (
             <div className='proplist-wrap'>
                 {
@@ -84,7 +84,27 @@ const PropList = ({contract, currentOID, orgArray, userCredits }) => {
         );
     }else{
         return (
-            <div>NO PROPS</div>
+            <div>
+                {
+                    creator === account ?
+                    <div className='noprops-wrap'>
+                        <div className='noprops'>
+                            No Proposals Yet
+                        </div>
+                        <div >
+                            <a className='a-btn' href="/create/proposal"> Create One</a>
+                        </div>
+                        
+                    </div>
+                    :
+                    <div className='noprops-wrap'>
+                        <div>
+                            No Proposals Yet
+                        </div>
+                    </div>
+                }
+            </div>
+            
         )
     }
     

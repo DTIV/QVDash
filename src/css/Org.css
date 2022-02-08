@@ -75,6 +75,16 @@
     justify-content: center;
 }
 
+.org-price{
+    text-align: center;
+}
+
+.noprops-wrap{
+    text-align: center;
+}
+.noprops{
+    margin: 2rem 0;
+}
 @media screen and (max-width: 1400px) {
     .orglist-wrap{
       display: grid;

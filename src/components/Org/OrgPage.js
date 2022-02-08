@@ -35,7 +35,7 @@ const OrgPage = (props) => {
             setOrgArray(allOrgs)
         }
     }
-    
+
     return (
         <div>
             <div className='lrg-title'>ORGANIZATIONS</div>
@@ -44,32 +44,33 @@ const OrgPage = (props) => {
             </div>
             <div className='org-wrap'>
                 {
-                    orgArray ? 
-                    <div className='orglist-wrap'>
+                    props.connected ?
+                    <div>
                         {
-                            orgArray.map((org)=>(
-                                <div key={org.oid}>
-                                    <OrgCard 
-                                        oid={org.oid}
-                                        name={org.name}
-                                        ProposalCount={org.ProposalCount} 
-                                        // meta={props.meta}
-                                        contract={props.contract}/>
-                                </div>
-                                
-                            ))
+                            orgArray ? 
+                            <div className='orglist-wrap'>
+                                {
+                                    orgArray.map((org)=>(
+                                        <div key={org.oid}>
+                                            <OrgCard 
+                                                oid={org.oid}
+                                                name={org.name}
+                                                ProposalCount={org.ProposalCount} 
+                                                // meta={props.meta}
+                                                contract={props.contract}/>
+                                        </div>
+                                        
+                                    ))
+                                }
+                            </div>
+                            : 
+                            <div className='orglist-loading'>No Organizations Yet.</div>
                         }
                     </div>
-                    : 
-                    <div className='orglist-loading'>Connect Wallet To View Organizations.</div>
+                    :
+                    <div>Connect Wallet To View Organizations.</div>
                 }
-            </div>
-            <div>
-                {
-                    orgArray.length === 0 ?
-                    <div> No Organizations Yet.</div>
-                    : <></>
-                }
+                
             </div>
         </div>
     );
