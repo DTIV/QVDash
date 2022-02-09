@@ -10,7 +10,7 @@ This react application is our submission for Gitcoin's : [Schelling Point Virtua
 
 #### View Live Site:
 
-{% embed url="https://amazing-keller-2bf46c.netlify.app" %}
+{% embed url="https://xenodochial-kirch-37fead.netlify.app" %}
 
 QVDash is a multi-chain, quadratic voting platform, Currently deployed on the Rinkeby Testnet, users can vote quadratically on various organization's proposals. Organizations are created by entering the protocol contract address, a name for the protocol (if a contract has no name) and the amount of credits per voter. CPV can be changed in the future.&#x20;
 
