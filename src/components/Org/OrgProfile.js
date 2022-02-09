@@ -16,7 +16,6 @@ const OrgProfile = (props) => {
     const [currentOrg, setCurrentOrg] = useState("")
     const [orgData, setOrgData] = useState("");
     const [allProps, setAllProps] = useState("");
-    const [mintAllow, setMintAllow] = useState(true)
 
     const path = window.location.pathname
     const currentOID = Number(path.replace("/org/", ""))
@@ -106,14 +105,12 @@ const OrgProfile = (props) => {
     const allowMint = async () => {
         if(QVContract){
             await QVContract.allowMinting(currentOID);
-            setMintAllow(true)
         }
     }
 
     const blockMint = async () => {
         if(QVContract){
             await QVContract.blockMinting(currentOID);
-            setMintAllow(false)
         }
     }
 
@@ -163,12 +160,8 @@ const OrgProfile = (props) => {
                 </div>
                 : orgArray ?
                     <div className='control-btn'>
-                        {
-                            mintAllow ?
                             <button className='a-btn' onClick={blockMint}>Stop Minting</button>
-                            :
                             <button className='a-btn' onClick={allowMint}>Reset Minting</button>
-                        }
                     </div>
                     :<></>
             }
